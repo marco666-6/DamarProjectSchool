@@ -67,8 +67,8 @@
                                     @else
                                         <span class="badge bg-secondary me-1">Nonaktif</span>
                                     @endif
-                                    <a href="{{ route('admin.kriteria.edit', $k) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
-                                    <form id="del-k-{{ $k->id }}" method="POST" action="{{ route('admin.kriteria.destroy', $k) }}" class="d-inline">
+                                    <a href="{{ url('/admin/kriteria/' . $k->id . '/edit') }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                                    <form id="del-k-{{ $k->id }}" method="POST" action="{{ url('/admin/kriteria/' . $k->id) }}" class="d-inline">
                                         @csrf @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-outline-danger btn-delete" data-form="del-k-{{ $k->id }}"><i class="bi bi-trash"></i></button>
                                     </form>

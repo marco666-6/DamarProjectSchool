@@ -66,15 +66,15 @@ Route::middleware(['auth', 'role:admin'])
     Route::resource('kegiatan', Admin\KegiatanController::class)->except(['show']);
 
     // Kriteria SAW
-    Route::resource('kriteria', Admin\KriteriaController::class)->except(['show']);
     Route::post('kriteria/update-bobot', [Admin\KriteriaController::class, 'updateBobot'])
         ->name('kriteria.update-bobot');
+    Route::resource('kriteria', Admin\KriteriaController::class)->except(['show']);
 
     // Sekolah Rekomendasi (SMP)
-    Route::resource('sekolah-rekomendasi', Admin\SekolahRekomendasiController::class);
     Route::get('sekolah-rekomendasi/matriks-keputusan',
         [Admin\SekolahRekomendasiController::class, 'matriksKeputusan'])
         ->name('sekolah-rekomendasi.matriks');
+    Route::resource('sekolah-rekomendasi', Admin\SekolahRekomendasiController::class);
 
     // Sekolah Info (BIIS profile)
     Route::get('sekolah-info',         [Admin\SekolahInfoController::class, 'edit'])->name('sekolah-info.edit');

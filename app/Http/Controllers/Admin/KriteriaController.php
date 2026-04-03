@@ -43,13 +43,15 @@ class KriteriaController extends Controller
             ->with('success', 'Kriteria berhasil ditambahkan. Pastikan total bobot = 1.0');
     }
 
-    public function edit(Kriteria $kriteria)
+    public function edit(Kriteria $kriterium)
     {
+        $kriteria = $kriterium;
         return view('admin.kriteria.edit', compact('kriteria'));
     }
 
-    public function update(Request $request, Kriteria $kriteria)
+    public function update(Request $request, Kriteria $kriterium)
     {
+        $kriteria = $kriterium;
         $data = $request->validate([
             'nama_kriteria' => ['required', 'string', 'max:100'],
             'kode_kriteria' => ['required', 'string', 'max:10', 'unique:kriteria,kode_kriteria,' . $kriteria->id],
@@ -67,8 +69,9 @@ class KriteriaController extends Controller
             ->with('success', 'Kriteria berhasil diperbarui.');
     }
 
-    public function destroy(Kriteria $kriteria)
+    public function destroy(Kriteria $kriterium)
     {
+        $kriteria = $kriterium;
         $kriteria->delete();
         return redirect()->route('admin.kriteria.index')
             ->with('success', 'Kriteria berhasil dihapus.');

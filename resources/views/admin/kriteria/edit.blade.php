@@ -7,7 +7,7 @@
 <div class="card">
     <div class="card-header fw-semibold"><i class="bi bi-pencil me-2"></i>Edit: {{ $kriteria->nama_kriteria }}</div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.kriteria.update', $kriteria) }}">
+        <form method="POST" action="{{ url('/admin/kriteria/' . $kriteria->id) }}">
             @csrf @method('PUT')
             @include('admin.kriteria._form')
             <div class="d-flex gap-2 mt-4">
