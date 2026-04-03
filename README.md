@@ -1,1276 +1,255 @@
-DAMAR PROJECT SCHOOL
-COMPLETE USER GUIDE, FEATURE MANUAL, TECHNICAL EXPLANATION, AND LOCAL SETUP GUIDE
+# Damar Project School
 
-===============================================================================
-1. DOCUMENT PURPOSE
-===============================================================================
+Portal sekolah berbasis Laravel untuk admin, guru, dan wali murid, lengkap dengan landing page profil sekolah, dashboard per role, manajemen data akademik, dan sistem rekomendasi sekolah lanjutan berbasis SAW.
 
-Dokumen ini dibuat untuk menjelaskan:
+## Clone And Run
 
-1. Apa itu website Damar Project School.
-2. Siapa saja pengguna website ini.
-3. Fitur apa saja yang tersedia untuk tiap peran.
-4. Cara menggunakan setiap fitur dari sisi pengguna.
-5. Apa yang terjadi di balik layar pada backend dan kode program.
-6. Cara clone, install, dan menjalankan project secara lokal.
+### 1. Clone project
 
-Dokumen ini bisa dipakai oleh:
-
-- Admin sekolah
-- Guru
-- Orang tua / wali murid
-- Developer / maintainer project
-- Tim presentasi / dokumentasi
-
-
-===============================================================================
-2. RINGKASAN WEBSITE
-===============================================================================
-
-Damar Project School adalah website portal sekolah berbasis Laravel yang memiliki
-beberapa fungsi utama:
-
-- Landing page / halaman depan sekolah
-- Sistem login multi-role
-- Dashboard admin
-- Dashboard guru
-- Dashboard wali murid / user
-- Manajemen data siswa
-- Manajemen data guru
-- Manajemen mata pelajaran
-- Manajemen nilai
-- Manajemen kegiatan siswa
-- Profil sekolah
-- Sistem rekomendasi sekolah lanjutan dengan metode SAW
-
-Secara sederhana:
-
-- Admin mengelola semua data.
-- Guru mengelola nilai dan kegiatan yang berkaitan dengan tugasnya.
-- User / wali murid melihat data anak, nilai, kegiatan, dan rekomendasi sekolah.
-
-
-===============================================================================
-3. TEKNOLOGI YANG DIGUNAKAN
-===============================================================================
-
-Backend:
-- PHP 8.2+
-- Laravel 12
-- Eloquent ORM
-- Laravel routing, middleware, validation, session, auth
-
-Frontend:
-- Blade template
-- Bootstrap 5
-- Bootstrap Icons
-- Chart.js
-- Select2
-- DataTables pada beberapa halaman
-
-Database:
-- MySQL untuk penggunaan utama
-- SQLite in-memory dipakai saat testing
-
-Build tools:
-- Node.js
-- NPM
-- Vite
-
-
-===============================================================================
-4. STRUKTUR PERAN PENGGUNA
-===============================================================================
-
-Website ini memiliki 3 role utama pada tabel users:
-
-1. admin
-2. guru
-3. user
-
-Penjelasan:
-
-Admin:
-- Memiliki akses penuh ke data master dan pengaturan sistem.
-- Mengelola data siswa, guru, mapel, nilai, kegiatan, user, kriteria, sekolah
-  rekomendasi, dan profil sekolah.
-
-Guru:
-- Melihat dashboard guru.
-- Mengelola nilai siswa.
-- Mengelola kegiatan siswa.
-- Melihat data siswa dan profil sekolah.
-
-User:
-- Biasanya berperan sebagai wali murid / orang tua.
-- Melihat data anak yang terhubung ke akun.
-- Melihat nilai, kegiatan, data guru, data sekolah.
-- Menggunakan fitur rekomendasi sekolah.
-
-
-===============================================================================
-5. ALUR AKSES WEBSITE
-===============================================================================
-
-Landing page:
-- URL: /
-- Menampilkan profil sekolah, statistik ringkas, pengumuman, dan kontak.
-- Data diambil langsung dari database.
-
-Login:
-- URL: /login
-- User memasukkan email dan password.
-- Setelah login, user diarahkan sesuai role:
-  - admin -> /admin/dashboard
-  - guru -> /guru/dashboard
-  - user -> /user/dashboard
-
-Register:
-- URL: /register
-- Hanya untuk membuat akun role user.
-- Akun self-register akan langsung menjadi role "user".
-
-Logout:
-- Tombol logout tersedia setelah login.
-- Session dihentikan dan user kembali ke halaman login.
-
-
-===============================================================================
-6. PENJELASAN LANDING PAGE / HALAMAN DEPAN
-===============================================================================
-
-Tujuan:
-- Menjadi profil sekolah publik.
-- Tidak langsung melempar user ke login.
-- Menampilkan identitas sekolah secara profesional.
-
-Yang tampil:
-- Nama sekolah
-- Visi sekolah
-- Akreditasi
-- Kepala sekolah
-- NPSN
-- Lokasi sekolah
-- Statistik utama
-- Ringkasan profil
-- Pengumuman terbaru
-- Grafik ringkas akademik
-- Kontak sekolah
-
-Data sumber:
-- SekolahInfo
-- Siswa
-- Guru
-- Kegiatan
-- Nilai
-
-Yang terjadi di backend:
-- Route "/" memanggil HomeController@index
-- Controller mengambil data agregat:
-  - total siswa
-  - total guru
-  - total kegiatan
-  - rata-rata nilai
-  - pengumuman terbaru
-- View menampilkan data dengan layout publik
-
-Catatan:
-- Landing page sengaja dibuat lebih ringan agar tidak terlalu berat saat dibuka.
-
-
-===============================================================================
-7. DASHBOARD ADMIN
-===============================================================================
-
-Tujuan:
-- Menjadi pusat kontrol sistem.
-
-Yang ditampilkan:
-- Ringkasan jumlah siswa
-- Ringkasan jumlah guru
-- Jumlah user
-- Jumlah sekolah rekomendasi
-- Jumlah kriteria SAW
-- Jumlah riwayat rekomendasi
-- Rata-rata nilai
-- Jumlah kegiatan
-- Grafik dinamis
-- Shortcut ke fitur penting
-- Tabel kegiatan terbaru
-- Tabel siswa terbaru
-- Tabel guru terbaru
-- Tabel rekomendasi terbaru
-
-Yang terjadi di backend:
-- Route: /admin/dashboard
-- Controller: Admin\DashboardController@index
-- Controller menghitung statistik dengan query agregat
-- Data dikirim ke Blade view
-- Chart dirender menggunakan Chart.js di frontend
-
-
-===============================================================================
-8. DASHBOARD GURU
-===============================================================================
-
-Tujuan:
-- Memberi ringkasan pekerjaan guru.
-
-Yang ditampilkan:
-- Jumlah nilai yang sudah diinput
-- Jumlah kegiatan yang dicatat
-- Jumlah mapel
-- Rata-rata nilai
-- Shortcut cepat
-- Grafik performa
-- Ringkasan siswa
-- Nilai terbaru
-- Kegiatan terbaru
-
-Yang terjadi di backend:
-- Route: /guru/dashboard
-- Controller: Guru\DashboardController@index
-- Data difilter berdasarkan guru yang sedang login
-
-
-===============================================================================
-9. DASHBOARD USER / WALI MURID
-===============================================================================
-
-Tujuan:
-- Menjadi dashboard orang tua / wali murid.
-
-Yang ditampilkan:
-- Jumlah anak yang terhubung
-- Rata-rata nilai anak
-- Jumlah kegiatan
-- Riwayat rekomendasi
-- Shortcut cepat
-- Grafik ringkas
-- Data anak
-- Nilai terbaru
-- Kegiatan terbaru
-- Rekomendasi sekolah terakhir
-
-Yang terjadi di backend:
-- Route: /user/dashboard
-- Controller: User\DashboardController@index
-- Sistem mencari siswa dengan user_id sesuai akun user yang login
-- Semua statistik difilter berdasarkan anak milik user tersebut
-
-
-===============================================================================
-10. PROFIL USER
-===============================================================================
-
-Menu:
-- /profile
-- /profile/edit
-
-Fungsi:
-- Melihat profil akun
-- Mengubah nama
-- Mengubah nomor telepon
-- Mengubah alamat
-- Mengubah tempat dan tanggal lahir
-- Mengubah foto profil
-- Mengubah password
-
-Khusus guru:
-- Saat profile user guru diubah, data guru terkait juga disinkronkan
-
-Yang terjadi di backend:
-- Controller: ProfileController
-- Validasi request
-- Upload file foto ke storage/public/profiles
-- Update tabel users
-- Jika role guru, update juga tabel guru
-
-
-===============================================================================
-11. MANAJEMEN SISWA
-===============================================================================
-
-Akses:
-- Admin
-- Guru dan user hanya melihat, tidak mengelola penuh
-
-Fitur admin:
-- Tambah siswa
-- Edit siswa
-- Hapus siswa
-- Lihat detail siswa
-- Filter dan pencarian
-
-Data utama siswa:
-- NISN
-- NIS
-- Nama siswa
-- Nama orang tua
-- Alamat
-- Jenis kelamin
-- Kelas
-- Tahun masuk
-- Foto
-- Status aktif
-- Relasi ke akun user
-
-Yang terjadi di backend:
-- Controller: Admin\SiswaController
-- Model: Siswa
-- Tabel: siswa
-
-Relasi penting:
-- Siswa -> hasMany Nilai
-- Siswa -> hasMany Kegiatan
-- Siswa -> belongsTo User
-
-
-===============================================================================
-12. MANAJEMEN GURU
-===============================================================================
-
-Akses:
-- Admin penuh
-- User hanya lihat data guru
-
-Fitur:
-- Tambah guru
-- Edit guru
-- Hapus guru
-- Lihat guru
-- Hubungkan guru dengan user jika diperlukan
-
-Data guru:
-- NIP
-- Nama guru
-- Email
-- Phone
-- Pendidikan terakhir
-- Foto
-- Status aktif
-
-Yang terjadi di backend:
-- Controller: Admin\GuruController
-- Model: Guru
-- Tabel: guru
-
-Relasi penting:
-- Guru -> belongsTo User
-- Guru -> hasMany MataPelajaran
-- Guru -> hasMany Nilai
-- Guru -> hasMany Kegiatan
-
-
-===============================================================================
-13. MANAJEMEN MATA PELAJARAN
-===============================================================================
-
-Akses:
-- Admin
-
-Fungsi:
-- Menentukan daftar mapel
-- Menentukan kode mapel
-- Menentukan kategori
-- Menentukan guru pengampu
-
-Kenapa penting:
-- Nilai siswa berhubungan langsung dengan mapel
-- Guru juga mengajar berdasarkan mapel
-
-Yang terjadi di backend:
-- Controller: Admin\MataPelajaranController
-- Model: MataPelajaran
-- Tabel: mata_pelajaran
-
-
-===============================================================================
-14. MANAJEMEN NILAI
-===============================================================================
-
-Akses:
-- Admin
-- Guru
-- User hanya melihat
-
-FITUR BARU YANG SUDAH DIPERBAIKI:
-- Nilai tidak lagi terasa berantakan per baris mapel di halaman utama
-- Sekarang tampilan utama dikelompokkan per siswa + semester
-- Admin dan guru bisa mengelola banyak mapel sekaligus dalam satu halaman
-
-Kenapa ini penting:
-- Sebelumnya 1 siswa dengan 10 mapel bisa muncul 10 baris terpisah
-- Sekarang lebih rapi, lebih scalable, dan lebih mudah saat data besar
-
-Halaman index nilai:
-- Menampilkan kelompok data:
-  - siswa
-  - kelas
-  - semester
-  - jumlah mapel
-  - rata-rata nilai
-  - terakhir diubah
-
-Filter yang tersedia:
-- Cari nama siswa / NISN
-- Kelas
-- Semester
-- Mata pelajaran
-- Jumlah baris per halaman
-
-Halaman kelola nilai:
-- Pilih 1 siswa
-- Pilih 1 semester
-- Sistem menampilkan semua mapel sekaligus
-- Admin atau guru bisa:
-  - isi nilai tugas
-  - isi nilai ujian
-  - isi nilai praktikum
-  - isi catatan
-  - hapus nilai mapel tertentu
-
-Rumus nilai akhir:
-- tugas 30%
-- ujian 50%
-- praktikum 20%
-
-Rumus backend:
-- nilai_akhir dihitung otomatis di model Nilai melalui hitungNilaiAkhir()
-
-Yang terjadi di backend:
-- Admin controller: Admin\NilaiController
-- Guru controller: Guru\NilaiController
-- Model: Nilai
-- Tabel: nilai
-- Saat save:
-  - sistem loop semua mapel dari form
-  - sistem hitung nilai akhir
-  - sistem updateOrCreate berdasarkan:
-    - siswa_id
-    - mapel_id
-    - semester
-
-Keuntungan:
-- Input massal jauh lebih cepat
-- Edit massal jauh lebih mudah
-- Siap untuk data lebih besar
-
-
-===============================================================================
-15. MANAJEMEN KEGIATAN SISWA
-===============================================================================
-
-Akses:
-- Admin
-- Guru
-- User hanya melihat
-
-Fitur:
-- Tambah kegiatan siswa
-- Edit kegiatan
-- Hapus kegiatan
-- Filter kegiatan
-
-Contoh kegiatan:
-- Akademik
-- Non-Akademik
-- Ekstrakurikuler
-- Keagamaan
-- Sosial
-- Tahfidz
-- Lainnya
-
-Data yang dicatat:
-- Nama kegiatan
-- Jenis kegiatan
-- Tanggal
-- Deskripsi
-- Prestasi
-- Tingkat
-- Siswa
-- Guru
-
-Yang terjadi di backend:
-- Controller admin: Admin\KegiatanController
-- Controller guru: Guru\KegiatanController
-- Model: Kegiatan
-- Tabel: kegiatan
-
-
-===============================================================================
-16. PROFIL SEKOLAH
-===============================================================================
-
-Akses:
-- Admin mengelola
-- Guru dan user melihat
-- Landing page memakai data ini
-
-Data yang dikelola:
-- Nama sekolah
-- Singkatan
-- Visi
-- Misi
-- Sejarah
-- Kepala sekolah
-- NPSN
-- NSS
-- Alamat
-- Kota
-- Provinsi
-- Kode pos
-- Telepon
-- Email
-- Website
-- Logo
-- Foto sekolah
-- Akreditasi
-- Fasilitas
-
-Catatan penting:
-- Sistem memakai pendekatan singleton
-- Artinya biasanya hanya ada 1 data utama profil sekolah
-
-Yang terjadi di backend:
-- Model: SekolahInfo
-- Method helper: getInstance()
-- Jika belum ada row, sistem bisa membuat row default
-
-Perbaikan yang sudah dibuat:
-- Input misi dan fasilitas dari textarea multi-baris sekarang diproses benar
-- Tidak lagi mismatch antara field form dan controller
-
-
-===============================================================================
-17. USER MANAGEMENT
-===============================================================================
-
-Akses:
-- Admin
-
-Fungsi:
-- Tambah user
-- Edit user
-- Hapus user
-- Menentukan role user
-
-Role user penting untuk akses:
-- admin
-- guru
-- user
-
-Middleware akses:
-- RoleMiddleware mengecek apakah role user cocok dengan route yang dibuka
-- Jika tidak cocok, sistem memberi 403
-
-
-===============================================================================
-18. FITUR REKOMENDASI SEKOLAH
-===============================================================================
-
-Akses:
-- User / wali murid
-- Admin juga mengelola data dasarnya
-
-Tujuan:
-- Membantu user memilih sekolah lanjutan berdasarkan kriteria tertentu
-
-Contoh pertimbangan:
-- Biaya
-- Akreditasi
-- Jarak
-- Fasilitas
-- Jumlah guru
-- Kriteria lainnya sesuai konfigurasi admin
-
-Alur dari sisi user:
-
-1. User buka halaman rekomendasi
-2. User mengisi kebutuhan yang dianggap penting
-3. Sistem menghitung sekolah yang paling cocok
-4. Hasil ditampilkan dalam urutan ranking
-5. User dapat membuka detail sekolah
-6. Riwayat hasil disimpan
-
-Perbaikan bahasa yang sudah dibuat:
-- Form sekarang lebih mudah dipahami
-- Label teknis SAW disederhanakan
-- User diberi penjelasan kapan angka lebih besar lebih baik
-- User diberi penjelasan kapan angka lebih kecil lebih baik
-
-
-===============================================================================
-19. FITUR KRITERIA REKOMENDASI
-===============================================================================
-
-Akses:
-- Admin
-
-Fungsi:
-- Menentukan faktor apa saja yang dipakai untuk rekomendasi
-- Menentukan bobot tiap faktor
-- Menentukan arah penilaian
-
-Contoh:
-- Akreditasi:
-  - arah penilaian = nilai lebih besar lebih baik
-- Biaya SPP:
-  - arah penilaian = nilai lebih kecil lebih baik
-
-Field utama:
-- kode_kriteria
-- nama_kriteria
-- jenis
-- bobot
-- deskripsi
-- is_active
-- urutan
-
-Perbaikan penting:
-- Bug edit kriteria sudah diperbaiki
-- Sekarang binding route edit/update/delete sudah cocok dengan parameter route
-
-Hal penting untuk admin:
-- Total bobot semua kriteria aktif harus = 1.0
-- Kalau tidak 1.0, hasil SAW bisa tidak valid
-
-
-===============================================================================
-20. FITUR SEKOLAH REKOMENDASI
-===============================================================================
-
-Akses:
-- Admin
-
-Fungsi:
-- Menambah daftar sekolah yang akan dibandingkan sistem
-
-Data utama:
-- Nama sekolah
-- NPSN
-- Jenis
-- Akreditasi
-- Alamat
-- Kecamatan
-- Kota
-- Latitude
-- Longitude
-- Fasilitas
-- Biaya SPP
-- Biaya masuk
-- Telepon
-- Website
-- Email
-- Deskripsi
-- Foto
-- Jumlah siswa
-- Jumlah guru
-- Status aktif
-
-Tab nilai rekomendasi:
-- Admin memasukkan nilai angka untuk tiap kriteria
-- Admin juga dapat memberi catatan penjelas
-
-Contoh:
-- Kriteria: Akreditasi
-  - nilai angka: 100
-  - keterangan: Akreditasi A
-
-- Kriteria: Biaya SPP
-  - nilai angka: 500000
-  - keterangan: Rp500.000 per bulan
-
-Perbaikan penting:
-- Form sekarang memakai bahasa yang lebih mudah dimengerti
-- Admin dibantu memahami apa arti nilai yang diinput
-
-
-===============================================================================
-21. FITUR TABEL PERBANDINGAN / MATRIKS
-===============================================================================
-
-Akses:
-- Admin
-
-Tujuan:
-- Menunjukkan nilai asli sekolah per kriteria
-- Menunjukkan hasil akhir ranking
-
-Yang tampil:
-- Tabel nilai asli
-- Tabel hasil ranking akhir
-
-Perbaikan penting:
-- Route matriks sekarang tidak 404 lagi
-- Route khusus matriks diletakkan sebelum route resource
-
-Bahasa tampilan:
-- Sudah dibuat lebih mudah dipahami
-- Tidak terlalu penuh istilah teknis
-
-
-===============================================================================
-22. APA ITU SAW
-===============================================================================
-
-SAW = Simple Additive Weighting
-
-Secara sederhana:
-- Sistem membandingkan beberapa sekolah
-- Setiap sekolah dinilai pada beberapa kriteria
-- Setiap kriteria punya bobot kepentingan
-- Nilai dinormalisasi
-- Nilai dibobot
-- Semua hasil dijumlahkan
-- Sekolah dengan skor tertinggi menjadi yang paling direkomendasikan
-
-Penjelasan sederhana:
-- Jika suatu kriteria sangat penting, bobotnya besar
-- Jika sekolah bagus pada kriteria penting, skornya naik
-- Jika sekolah buruk pada kriteria penting, skornya turun
-
-
-===============================================================================
-23. APA YANG TERJADI DI BACKEND SAAT REKOMENDASI DIJALANKAN
-===============================================================================
-
-File utama:
-- app/Services/SawService.php
-
-Langkah proses:
-
-1. Sistem ambil semua kriteria aktif
-2. Sistem ambil semua sekolah aktif beserta nilai kriterianya
-3. Sistem membangun matriks keputusan
-4. Sistem menyesuaikan dengan preferensi user jika ada
-5. Sistem normalisasi nilai
-6. Sistem mengalikan hasil normalisasi dengan bobot
-7. Sistem menjumlahkan semua hasil
-8. Sistem mengurutkan sekolah dari skor tertinggi ke terendah
-
-Normalisasi:
-
-Untuk kriteria benefit:
-- rumus: nilai sekolah / nilai maksimum kolom
-
-Untuk kriteria cost:
-- rumus: nilai minimum kolom / nilai sekolah
-
-Hasil akhir:
-- skor_total
-- ranking
-- detail kontribusi tiap kriteria
-
-Hasil disimpan ke tabel rekomendasi agar bisa dilihat kembali.
-
-
-===============================================================================
-24. RIWAYAT REKOMENDASI
-===============================================================================
-
-Akses:
-- User
-
-Fungsi:
-- Menyimpan hasil pencarian sebelumnya
-- Bisa dibuka lagi tanpa menghitung ulang
-
-Yang disimpan:
-- user_id
-- preferensi user
-- hasil_saw
-- skor_total terbaik
-- ranking
-- status_rekomendasi
-
-Manfaat:
-- Tracking pencarian sebelumnya
-- Membandingkan hasil dari preferensi yang berbeda
-
-
-===============================================================================
-25. PAGINATION, FILTER, DAN KESIAPAN DATA BESAR
-===============================================================================
-
-Arah pengembangan sistem ini sudah mempertimbangkan data besar.
-
-Yang sudah diperbaiki:
-- Nilai dikelompokkan per siswa + semester
-- Ada pilihan jumlah baris per halaman
-- Ada filter pencarian
-- Ada filter semester
-- Ada filter kelas
-- Ada filter mapel
-
-Kenapa penting:
-- Jika data mencapai ribuan atau puluhan ribu record, halaman tanpa filter dan
-  pagination akan lambat dan berat
-
-Prinsip yang dipakai:
-- Query dibatasi dengan paginate()
-- Filter diproses di query database
-- Tidak semua data di-load sekaligus ke frontend
-
-Saran lanjutan untuk masa depan:
-- Tambahkan index database untuk kolom pencarian penting
-- Gunakan server-side datatable pada halaman sangat besar
-- Tambahkan caching untuk statistik dashboard
-- Tambahkan lazy loading untuk widget berat
-
-
-===============================================================================
-26. PENJELASAN FILE DAN BAGIAN PENTING DI BACKEND
-===============================================================================
-
-Routes:
-- routes/web.php
-- Mendefinisikan semua URL, middleware, dan controller yang dipakai
-
-Controllers:
-- app/Http/Controllers/...
-- Berisi logika tiap halaman dan aksi form
-
-Models:
-- app/Models/...
-- Mewakili tabel database dan relasi antar data
-
-Middleware:
-- app/Http/Middleware/RoleMiddleware.php
-- Mengecek hak akses user berdasarkan role
-
-Service:
-- app/Services/SawService.php
-- Menangani seluruh logika perhitungan SAW
-
-Views:
-- resources/views/...
-- Tampilan Blade untuk admin, guru, user, auth, home, layouts
-
-Providers:
-- app/Providers/AppServiceProvider.php
-- Konfigurasi global
-- Saat ini juga dipakai untuk pagination Bootstrap 5
-
-Tests:
-- tests/...
-- Berisi test unit dan feature
-
-
-===============================================================================
-27. RINGKASAN CONTROLLER PENTING
-===============================================================================
-
-HomeController:
-- Menyusun data landing page
-
-Auth\LoginController:
-- Login
-- Logout
-
-Auth\RegisterController:
-- Register user baru dengan role user
-
-ProfileController:
-- Tampil profil
-- Edit profil
-- Ganti password
-
-Admin\DashboardController:
-- Statistik dashboard admin
-
-Guru\DashboardController:
-- Statistik dashboard guru
-
-User\DashboardController:
-- Statistik dashboard user
-
-Admin\NilaiController:
-- Kelola nilai massal per siswa + semester
-
-Guru\NilaiController:
-- Kelola nilai massal guru
-
-Admin\SekolahInfoController:
-- Kelola profil sekolah
-
-Admin\KriteriaController:
-- Kelola faktor rekomendasi
-
-Admin\SekolahRekomendasiController:
-- Kelola sekolah pembanding
-- Tampilkan matriks keputusan
-
-User\RekomendasiController:
-- Form preferensi
-- Hitung rekomendasi
-- Tampil hasil
-- Tampil riwayat
-
-
-===============================================================================
-28. RINGKASAN MODEL PENTING
-===============================================================================
-
-User:
-- Data akun utama
-- Menyimpan role
-
-Guru:
-- Data detail guru
-
-Siswa:
-- Data siswa
-- Terhubung ke user dan nilai
-
-MataPelajaran:
-- Data mapel
-
-Nilai:
-- Data nilai akademik
-- Menghitung nilai akhir
-
-Kegiatan:
-- Data kegiatan siswa
-
-SekolahInfo:
-- Profil sekolah utama
-
-Kriteria:
-- Faktor rekomendasi
-
-NilaiKriteria:
-- Nilai sekolah pada tiap kriteria
-
-SekolahRekomendasi:
-- Sekolah yang dibandingkan di sistem SAW
-
-Rekomendasi:
-- Riwayat hasil rekomendasi user
-
-
-===============================================================================
-29. VALIDASI DAN KEAMANAN YANG DIPAKAI
-===============================================================================
-
-Laravel validation:
-- Semua form penting divalidasi di controller
-
-Auth middleware:
-- Halaman tertentu hanya bisa diakses jika login
-
-Role middleware:
-- Role tertentu hanya bisa buka halaman tertentu
-
-CSRF:
-- Form POST/PUT/DELETE dilindungi oleh CSRF token Laravel
-
-Password hashing:
-- Password disimpan dalam bentuk hash
-
-File upload:
-- File gambar divalidasi sebagai image
-- Ukuran file dibatasi
-
-
-===============================================================================
-30. TUTORIAL CLONE DAN MENJALANKAN WEBSITE
-===============================================================================
-
-Syarat minimal:
-- PHP 8.2 atau lebih baru
-- Composer
-- Node.js dan NPM
-- MySQL
-- Git
-
-Langkah 1. Clone repository
-
-Jika project sudah ada di Git:
-
+```bash
 git clone <URL_REPOSITORY>
 cd DamarProjectSchool
+```
 
-Jika project ini hanya berupa folder lokal, Anda bisa copy folder project ke
-komputer lain lalu masuk ke folder project tersebut.
+Jika project didapat dari folder lokal, cukup masuk ke folder project:
 
+```bash
+cd DamarProjectSchool
+```
 
-Langkah 2. Install dependency PHP
+### 2. Install dependency backend
 
+```bash
 composer install
+```
 
+### 3. Install dependency frontend
 
-Langkah 3. Install dependency frontend
-
+```bash
 npm install
+```
 
-
-Langkah 4. Buat file environment
+### 4. Buat file environment
 
 Windows PowerShell:
 
+```powershell
 Copy-Item .env.example .env
+```
 
-Atau gunakan command Laravel script jika belum ada:
+Atau manual copy `.env.example` menjadi `.env`.
 
-composer run-script post-root-package-install
+### 5. Generate app key
 
-
-Langkah 5. Generate application key
-
+```bash
 php artisan key:generate
+```
 
+### 6. Atur database di `.env`
 
-Langkah 6. Atur koneksi database di file .env
+Contoh:
 
-Contoh MySQL:
-
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=damar_project_school
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
 Pastikan database sudah dibuat lebih dulu di MySQL.
 
+### 7. Jalankan migration
 
-Langkah 7. Jalankan migration
-
+```bash
 php artisan migrate
+```
 
+### 8. Buat storage link
 
-Langkah 8. Jika perlu, buat symbolic link storage
-
+```bash
 php artisan storage:link
+```
 
+### 9. Jalankan backend
 
-Langkah 9. Jalankan server backend
-
+```bash
 php artisan serve
+```
 
-Biasanya akan berjalan di:
+### 10. Jalankan frontend
 
-http://127.0.0.1:8000
-
-
-Langkah 10. Jalankan Vite frontend
-
+```bash
 npm run dev
+```
 
-Jika ingin build production:
+Lalu buka:
 
-npm run build
-
-
-Langkah 11. Akses website
-
-Buka browser dan akses:
-
+```text
 http://127.0.0.1:8000
+```
 
+### Opsi cepat
 
-===============================================================================
-31. OPSI CEPAT MENJALANKAN PROJECT
-===============================================================================
+Project ini juga punya helper script:
 
-Project ini juga punya script setup bawaan di composer.json:
-
+```bash
 composer run setup
-
-Script tersebut akan mencoba menjalankan:
-- composer install
-- copy .env
-- key generate
-- migrate
-- npm install
-- npm run build
-
-Dan ada script dev:
-
 composer run dev
+```
 
-Script ini menjalankan:
-- php artisan serve
-- php artisan queue:listen
-- php artisan pail
-- npm run dev
+## Testing
 
-Catatan:
-- Gunakan ini jika environment Anda sudah siap
-- Untuk troubleshooting, jalankan satu-satu manual biasanya lebih mudah
-
-
-===============================================================================
-32. TUTORIAL TESTING
-===============================================================================
-
-Menjalankan test:
-
+```bash
 php artisan test
+```
 
 Atau:
 
+```bash
 composer test
+```
 
-Catatan:
-- Feature test default memakai database SQLite in-memory saat testing
-- Test dasar saat ini memastikan homepage dapat dibuka dengan benar
+## Fitur Utama
 
+- Landing page sekolah berbasis database
+- Login multi-role: admin, guru, user
+- Dashboard khusus untuk tiap role
+- Manajemen siswa
+- Manajemen guru
+- Manajemen mata pelajaran
+- Manajemen nilai per siswa dan semester
+- Manajemen kegiatan siswa
+- Manajemen profil sekolah
+- Sistem rekomendasi sekolah lanjutan berbasis SAW
+- Riwayat rekomendasi user
 
-===============================================================================
-33. TROUBLESHOOTING UMUM
-===============================================================================
+## Ringkasan Role
 
-Masalah: halaman error karena cache lama
-Solusi:
+### Admin
 
+- Mengelola seluruh data utama sistem
+- Mengelola profil sekolah
+- Mengelola kriteria rekomendasi
+- Mengelola sekolah pembanding untuk SAW
+- Melihat dashboard admin lengkap
+
+### Guru
+
+- Mengelola nilai siswa
+- Mengelola kegiatan siswa
+- Melihat data siswa dan profil sekolah
+- Melihat dashboard guru
+
+### User / Wali Murid
+
+- Melihat data anak yang terhubung
+- Melihat nilai dan kegiatan anak
+- Melihat data sekolah dan guru
+- Menggunakan fitur rekomendasi sekolah
+
+## Arsitektur Singkat
+
+### Backend
+
+- Laravel 12
+- PHP 8.2+
+- Eloquent ORM
+- Middleware role-based access
+- Service khusus untuk perhitungan SAW
+
+### Frontend
+
+- Blade
+- Bootstrap 5
+- Bootstrap Icons
+- Chart.js
+- Select2
+
+### Database
+
+- MySQL untuk aplikasi utama
+- SQLite in-memory untuk testing
+
+## File Penting
+
+- `routes/web.php`
+  Semua route web aplikasi
+
+- `app/Http/Controllers/`
+  Seluruh controller admin, guru, user, auth, home, dan profile
+
+- `app/Models/`
+  Model data seperti `User`, `Siswa`, `Guru`, `Nilai`, `Kegiatan`, `Kriteria`, `SekolahInfo`, `SekolahRekomendasi`, `Rekomendasi`
+
+- `app/Services/SawService.php`
+  Logika perhitungan rekomendasi SAW
+
+- `resources/views/`
+  Semua tampilan Blade untuk landing page, dashboard, auth, admin, guru, user
+
+## Cara Kerja Rekomendasi SAW
+
+Secara sederhana:
+
+1. Admin menentukan kriteria dan bobot.
+2. Admin mengisi nilai tiap sekolah pada tiap kriteria.
+3. User mengisi kebutuhan yang dianggap penting.
+4. Sistem membandingkan seluruh sekolah aktif.
+5. Sistem menghitung skor akhir dan mengurutkan hasil.
+6. Hasil disimpan ke riwayat rekomendasi user.
+
+File utama:
+
+- `app/Services/SawService.php`
+
+## Catatan Operasional
+
+- Nilai sekarang dikelola per siswa + semester agar lebih rapi dan scalable
+- Pagination sudah memakai Bootstrap 5
+- Filter penting tersedia pada halaman data besar
+- Landing page dibuat lebih ringan agar tidak terlalu berat saat dibuka
+
+## Dokumentasi Lengkap
+
+Manual lengkap tersedia di:
+
+- [`DAMARPROJECTSCHOOL_COMPLETE_MANUAL.txt`](C:/Users/ASUS/Downloads/ALLIMPORTANTPROJECTS/DamarProjectSchool/DAMARPROJECTSCHOOL_COMPLETE_MANUAL.txt)
+
+Dokumen tersebut berisi:
+
+- panduan semua role
+- penjelasan setiap fitur
+- penjelasan backend dan kode
+- panduan clone dan run
+- troubleshooting
+
+## Troubleshooting Singkat
+
+### Clear cache Laravel
+
+```bash
 php artisan optimize:clear
 php artisan view:clear
 php artisan route:clear
 php artisan config:clear
+```
 
+### Jika file upload tidak tampil
 
-Masalah: file upload tidak tampil
-Solusi:
-
+```bash
 php artisan storage:link
+```
 
+### Jika frontend tidak update
 
-Masalah: CSS/JS tidak berubah
-Solusi:
-
+```bash
 npm run dev
-atau
+```
+
+atau:
+
+```bash
 npm run build
-
-
-Masalah: migration gagal
-Solusi:
-- Cek koneksi database di .env
-- Pastikan database sudah dibuat
-- Jalankan:
-  php artisan migrate:fresh
-
-Catatan:
-- migrate:fresh akan menghapus semua tabel dan data
-- Gunakan hanya jika memang aman dilakukan
-
-
-Masalah: halaman role tertentu tidak bisa diakses
-Solusi:
-- Cek role user di tabel users
-- Pastikan route memakai middleware role yang benar
-
-
-Masalah: edit kriteria kosong atau tidak binding
-Solusi:
-- Pastikan controller Kriteria memakai parameter route yang cocok:
-  {kriterium}
-- Pastikan view edit memakai URL yang benar
-
-
-===============================================================================
-34. SARAN OPERASIONAL UNTUK ADMIN SEKOLAH
-===============================================================================
-
-Urutan setup data yang disarankan:
-
-1. Isi profil sekolah
-2. Tambah guru
-3. Tambah mata pelajaran
-4. Tambah user
-5. Tambah siswa
-6. Hubungkan siswa ke akun user jika perlu
-7. Tambah kegiatan
-8. Input nilai
-9. Atur kriteria rekomendasi
-10. Isi sekolah rekomendasi dan nilai kriterianya
-
-Kenapa urutan ini bagus:
-- Data yang saling bergantung akan tersedia lebih dulu
-- Mengurangi error saat input
-
-
-===============================================================================
-35. SARAN OPERASIONAL UNTUK GURU
-===============================================================================
-
-Urutan penggunaan yang disarankan:
-
-1. Login
-2. Cek dashboard guru
-3. Buka menu nilai
-4. Pilih siswa dan semester
-5. Isi semua mapel yang relevan sekaligus
-6. Simpan
-7. Buka menu kegiatan jika ada aktivitas siswa yang perlu dicatat
-
-
-===============================================================================
-36. SARAN OPERASIONAL UNTUK WALI MURID
-===============================================================================
-
-Urutan penggunaan yang disarankan:
-
-1. Login
-2. Cek dashboard wali murid
-3. Lihat data anak
-4. Lihat nilai dan kegiatan anak
-5. Jika ingin sekolah lanjutan, buka menu rekomendasi
-6. Isi kebutuhan yang dianggap penting
-7. Lihat hasil ranking sekolah
-
-
-===============================================================================
-37. KETERANGAN TENTANG FITUR YANG PALING PENTING SECARA BISNIS
-===============================================================================
-
-Landing page:
-- Meningkatkan citra sekolah
-- Menjadi halaman publik utama
-
-Dashboard:
-- Mempercepat akses data harian
-
-Nilai:
-- Salah satu fitur operasional inti
-
-Kegiatan:
-- Memperlihatkan perkembangan siswa di luar nilai akademik
-
-Rekomendasi sekolah:
-- Menjadi fitur pembeda / nilai tambah sistem
-
-
-===============================================================================
-38. PENUTUP
-===============================================================================
-
-Website Damar Project School adalah portal sekolah multi-role yang menggabungkan:
-
-- Profil sekolah publik
-- Operasional akademik internal
-- Monitoring wali murid
-- Sistem rekomendasi sekolah lanjutan
-
-Secara teknis, sistem ini dibangun dengan Laravel dan sudah memiliki:
-
-- Struktur role yang jelas
-- Dashboard terpisah per role
-- Sistem data master
-- Input nilai yang lebih efisien
-- Fitur SAW yang lebih mudah dipahami
-- Filter dan pagination yang lebih siap untuk data besar
-
-Jika ingin mengembangkan sistem ini lebih lanjut, prioritas terbaik berikutnya
-biasanya adalah:
-
-- menambah seeders data awal
-- menambah test otomatis untuk fitur penting
-- menambah export Excel/PDF
-- memperkuat indexing database
-- menambah activity log audit trail
-
-
-END OF DOCUMENT
+```

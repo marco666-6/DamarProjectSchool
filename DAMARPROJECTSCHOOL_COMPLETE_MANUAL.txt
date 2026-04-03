@@ -2,7 +2,100 @@ DAMAR PROJECT SCHOOL
 COMPLETE USER GUIDE, FEATURE MANUAL, TECHNICAL EXPLANATION, AND LOCAL SETUP GUIDE
 
 ===============================================================================
-1. DOCUMENT PURPOSE
+1. CLONE, INSTALL, AND RUN THE WEBSITE
+===============================================================================
+
+Bagian ini sengaja diletakkan paling atas supaya orang yang baru membuka project
+bisa langsung menjalankan website tanpa harus membaca seluruh dokumen dulu.
+
+PRASYARAT
+
+- PHP 8.2 atau lebih baru
+- Composer
+- Node.js dan NPM
+- MySQL
+- Git
+
+LANGKAH 1 - CLONE PROJECT
+
+Jika project berasal dari repository Git:
+
+git clone <URL_REPOSITORY>
+cd DamarProjectSchool
+
+Jika project hanya berupa folder lokal:
+
+cd DamarProjectSchool
+
+LANGKAH 2 - INSTALL DEPENDENCY BACKEND
+
+composer install
+
+LANGKAH 3 - INSTALL DEPENDENCY FRONTEND
+
+npm install
+
+LANGKAH 4 - BUAT FILE ENVIRONMENT
+
+Windows PowerShell:
+
+Copy-Item .env.example .env
+
+LANGKAH 5 - GENERATE APP KEY
+
+php artisan key:generate
+
+LANGKAH 6 - ATUR DATABASE DI FILE .env
+
+Contoh:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=damar_project_school
+DB_USERNAME=root
+DB_PASSWORD=
+
+Pastikan database sudah dibuat lebih dulu di MySQL.
+
+LANGKAH 7 - JALANKAN MIGRATION
+
+php artisan migrate
+
+LANGKAH 8 - BUAT STORAGE LINK
+
+php artisan storage:link
+
+LANGKAH 9 - JALANKAN BACKEND
+
+php artisan serve
+
+LANGKAH 10 - JALANKAN FRONTEND
+
+npm run dev
+
+BUKA WEBSITE
+
+http://127.0.0.1:8000
+
+OPSIONAL - GUNAKAN SCRIPT CEPAT
+
+Project ini punya script bantu:
+
+composer run setup
+composer run dev
+
+TESTING
+
+php artisan test
+
+atau:
+
+composer test
+
+
+===============================================================================
+2. DOCUMENT PURPOSE
 ===============================================================================
 
 Dokumen ini dibuat untuk menjelaskan:
@@ -24,7 +117,7 @@ Dokumen ini bisa dipakai oleh:
 
 
 ===============================================================================
-2. RINGKASAN WEBSITE
+3. RINGKASAN WEBSITE
 ===============================================================================
 
 Damar Project School adalah website portal sekolah berbasis Laravel yang memiliki
@@ -51,7 +144,7 @@ Secara sederhana:
 
 
 ===============================================================================
-3. TEKNOLOGI YANG DIGUNAKAN
+4. TEKNOLOGI YANG DIGUNAKAN
 ===============================================================================
 
 Backend:
@@ -79,7 +172,7 @@ Build tools:
 
 
 ===============================================================================
-4. STRUKTUR PERAN PENGGUNA
+5. STRUKTUR PERAN PENGGUNA
 ===============================================================================
 
 Website ini memiliki 3 role utama pada tabel users:
@@ -109,7 +202,7 @@ User:
 
 
 ===============================================================================
-5. ALUR AKSES WEBSITE
+6. ALUR AKSES WEBSITE
 ===============================================================================
 
 Landing page:
@@ -136,7 +229,7 @@ Logout:
 
 
 ===============================================================================
-6. PENJELASAN LANDING PAGE / HALAMAN DEPAN
+7. PENJELASAN LANDING PAGE / HALAMAN DEPAN
 ===============================================================================
 
 Tujuan:
@@ -179,7 +272,7 @@ Catatan:
 
 
 ===============================================================================
-7. DASHBOARD ADMIN
+8. DASHBOARD ADMIN
 ===============================================================================
 
 Tujuan:
@@ -210,7 +303,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-8. DASHBOARD GURU
+9. DASHBOARD GURU
 ===============================================================================
 
 Tujuan:
@@ -234,7 +327,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-9. DASHBOARD USER / WALI MURID
+10. DASHBOARD USER / WALI MURID
 ===============================================================================
 
 Tujuan:
@@ -260,7 +353,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-10. PROFIL USER
+11. PROFIL USER
 ===============================================================================
 
 Menu:
@@ -288,7 +381,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-11. MANAJEMEN SISWA
+12. MANAJEMEN SISWA
 ===============================================================================
 
 Akses:
@@ -327,7 +420,7 @@ Relasi penting:
 
 
 ===============================================================================
-12. MANAJEMEN GURU
+13. MANAJEMEN GURU
 ===============================================================================
 
 Akses:
@@ -363,7 +456,7 @@ Relasi penting:
 
 
 ===============================================================================
-13. MANAJEMEN MATA PELAJARAN
+14. MANAJEMEN MATA PELAJARAN
 ===============================================================================
 
 Akses:
@@ -386,7 +479,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-14. MANAJEMEN NILAI
+15. MANAJEMEN NILAI
 ===============================================================================
 
 Akses:
@@ -458,7 +551,7 @@ Keuntungan:
 
 
 ===============================================================================
-15. MANAJEMEN KEGIATAN SISWA
+16. MANAJEMEN KEGIATAN SISWA
 ===============================================================================
 
 Akses:
@@ -499,7 +592,7 @@ Yang terjadi di backend:
 
 
 ===============================================================================
-16. PROFIL SEKOLAH
+17. PROFIL SEKOLAH
 ===============================================================================
 
 Akses:
@@ -543,7 +636,7 @@ Perbaikan yang sudah dibuat:
 
 
 ===============================================================================
-17. USER MANAGEMENT
+18. USER MANAGEMENT
 ===============================================================================
 
 Akses:
@@ -566,7 +659,7 @@ Middleware akses:
 
 
 ===============================================================================
-18. FITUR REKOMENDASI SEKOLAH
+19. FITUR REKOMENDASI SEKOLAH
 ===============================================================================
 
 Akses:
@@ -601,7 +694,7 @@ Perbaikan bahasa yang sudah dibuat:
 
 
 ===============================================================================
-19. FITUR KRITERIA REKOMENDASI
+20. FITUR KRITERIA REKOMENDASI
 ===============================================================================
 
 Akses:
@@ -637,7 +730,7 @@ Hal penting untuk admin:
 
 
 ===============================================================================
-20. FITUR SEKOLAH REKOMENDASI
+21. FITUR SEKOLAH REKOMENDASI
 ===============================================================================
 
 Akses:
@@ -687,7 +780,7 @@ Perbaikan penting:
 
 
 ===============================================================================
-21. FITUR TABEL PERBANDINGAN / MATRIKS
+22. FITUR TABEL PERBANDINGAN / MATRIKS
 ===============================================================================
 
 Akses:
@@ -711,7 +804,7 @@ Bahasa tampilan:
 
 
 ===============================================================================
-22. APA ITU SAW
+23. APA ITU SAW
 ===============================================================================
 
 SAW = Simple Additive Weighting
@@ -732,7 +825,7 @@ Penjelasan sederhana:
 
 
 ===============================================================================
-23. APA YANG TERJADI DI BACKEND SAAT REKOMENDASI DIJALANKAN
+24. APA YANG TERJADI DI BACKEND SAAT REKOMENDASI DIJALANKAN
 ===============================================================================
 
 File utama:
@@ -766,7 +859,7 @@ Hasil disimpan ke tabel rekomendasi agar bisa dilihat kembali.
 
 
 ===============================================================================
-24. RIWAYAT REKOMENDASI
+25. RIWAYAT REKOMENDASI
 ===============================================================================
 
 Akses:
@@ -790,7 +883,7 @@ Manfaat:
 
 
 ===============================================================================
-25. PAGINATION, FILTER, DAN KESIAPAN DATA BESAR
+26. PAGINATION, FILTER, DAN KESIAPAN DATA BESAR
 ===============================================================================
 
 Arah pengembangan sistem ini sudah mempertimbangkan data besar.
@@ -820,7 +913,7 @@ Saran lanjutan untuk masa depan:
 
 
 ===============================================================================
-26. PENJELASAN FILE DAN BAGIAN PENTING DI BACKEND
+27. PENJELASAN FILE DAN BAGIAN PENTING DI BACKEND
 ===============================================================================
 
 Routes:
@@ -858,7 +951,7 @@ Tests:
 
 
 ===============================================================================
-27. RINGKASAN CONTROLLER PENTING
+28. RINGKASAN CONTROLLER PENTING
 ===============================================================================
 
 HomeController:
@@ -909,7 +1002,7 @@ User\RekomendasiController:
 
 
 ===============================================================================
-28. RINGKASAN MODEL PENTING
+29. RINGKASAN MODEL PENTING
 ===============================================================================
 
 User:
@@ -950,7 +1043,7 @@ Rekomendasi:
 
 
 ===============================================================================
-29. VALIDASI DAN KEAMANAN YANG DIPAKAI
+30. VALIDASI DAN KEAMANAN YANG DIPAKAI
 ===============================================================================
 
 Laravel validation:
@@ -974,152 +1067,7 @@ File upload:
 
 
 ===============================================================================
-30. TUTORIAL CLONE DAN MENJALANKAN WEBSITE
-===============================================================================
-
-Syarat minimal:
-- PHP 8.2 atau lebih baru
-- Composer
-- Node.js dan NPM
-- MySQL
-- Git
-
-Langkah 1. Clone repository
-
-Jika project sudah ada di Git:
-
-git clone <URL_REPOSITORY>
-cd DamarProjectSchool
-
-Jika project ini hanya berupa folder lokal, Anda bisa copy folder project ke
-komputer lain lalu masuk ke folder project tersebut.
-
-
-Langkah 2. Install dependency PHP
-
-composer install
-
-
-Langkah 3. Install dependency frontend
-
-npm install
-
-
-Langkah 4. Buat file environment
-
-Windows PowerShell:
-
-Copy-Item .env.example .env
-
-Atau gunakan command Laravel script jika belum ada:
-
-composer run-script post-root-package-install
-
-
-Langkah 5. Generate application key
-
-php artisan key:generate
-
-
-Langkah 6. Atur koneksi database di file .env
-
-Contoh MySQL:
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=damar_project_school
-DB_USERNAME=root
-DB_PASSWORD=
-
-Pastikan database sudah dibuat lebih dulu di MySQL.
-
-
-Langkah 7. Jalankan migration
-
-php artisan migrate
-
-
-Langkah 8. Jika perlu, buat symbolic link storage
-
-php artisan storage:link
-
-
-Langkah 9. Jalankan server backend
-
-php artisan serve
-
-Biasanya akan berjalan di:
-
-http://127.0.0.1:8000
-
-
-Langkah 10. Jalankan Vite frontend
-
-npm run dev
-
-Jika ingin build production:
-
-npm run build
-
-
-Langkah 11. Akses website
-
-Buka browser dan akses:
-
-http://127.0.0.1:8000
-
-
-===============================================================================
-31. OPSI CEPAT MENJALANKAN PROJECT
-===============================================================================
-
-Project ini juga punya script setup bawaan di composer.json:
-
-composer run setup
-
-Script tersebut akan mencoba menjalankan:
-- composer install
-- copy .env
-- key generate
-- migrate
-- npm install
-- npm run build
-
-Dan ada script dev:
-
-composer run dev
-
-Script ini menjalankan:
-- php artisan serve
-- php artisan queue:listen
-- php artisan pail
-- npm run dev
-
-Catatan:
-- Gunakan ini jika environment Anda sudah siap
-- Untuk troubleshooting, jalankan satu-satu manual biasanya lebih mudah
-
-
-===============================================================================
-32. TUTORIAL TESTING
-===============================================================================
-
-Menjalankan test:
-
-php artisan test
-
-Atau:
-
-composer test
-
-Catatan:
-- Feature test default memakai database SQLite in-memory saat testing
-- Test dasar saat ini memastikan homepage dapat dibuka dengan benar
-
-
-===============================================================================
-33. TROUBLESHOOTING UMUM
+31. TROUBLESHOOTING UMUM
 ===============================================================================
 
 Masalah: halaman error karena cache lama
@@ -1130,12 +1078,10 @@ php artisan view:clear
 php artisan route:clear
 php artisan config:clear
 
-
 Masalah: file upload tidak tampil
 Solusi:
 
 php artisan storage:link
-
 
 Masalah: CSS/JS tidak berubah
 Solusi:
@@ -1143,7 +1089,6 @@ Solusi:
 npm run dev
 atau
 npm run build
-
 
 Masalah: migration gagal
 Solusi:
@@ -1156,12 +1101,10 @@ Catatan:
 - migrate:fresh akan menghapus semua tabel dan data
 - Gunakan hanya jika memang aman dilakukan
 
-
 Masalah: halaman role tertentu tidak bisa diakses
 Solusi:
 - Cek role user di tabel users
 - Pastikan route memakai middleware role yang benar
-
 
 Masalah: edit kriteria kosong atau tidak binding
 Solusi:
@@ -1171,7 +1114,7 @@ Solusi:
 
 
 ===============================================================================
-34. SARAN OPERASIONAL UNTUK ADMIN SEKOLAH
+32. SARAN OPERASIONAL UNTUK ADMIN SEKOLAH
 ===============================================================================
 
 Urutan setup data yang disarankan:
@@ -1187,13 +1130,9 @@ Urutan setup data yang disarankan:
 9. Atur kriteria rekomendasi
 10. Isi sekolah rekomendasi dan nilai kriterianya
 
-Kenapa urutan ini bagus:
-- Data yang saling bergantung akan tersedia lebih dulu
-- Mengurangi error saat input
-
 
 ===============================================================================
-35. SARAN OPERASIONAL UNTUK GURU
+33. SARAN OPERASIONAL UNTUK GURU
 ===============================================================================
 
 Urutan penggunaan yang disarankan:
@@ -1208,7 +1147,7 @@ Urutan penggunaan yang disarankan:
 
 
 ===============================================================================
-36. SARAN OPERASIONAL UNTUK WALI MURID
+34. SARAN OPERASIONAL UNTUK WALI MURID
 ===============================================================================
 
 Urutan penggunaan yang disarankan:
@@ -1223,28 +1162,7 @@ Urutan penggunaan yang disarankan:
 
 
 ===============================================================================
-37. KETERANGAN TENTANG FITUR YANG PALING PENTING SECARA BISNIS
-===============================================================================
-
-Landing page:
-- Meningkatkan citra sekolah
-- Menjadi halaman publik utama
-
-Dashboard:
-- Mempercepat akses data harian
-
-Nilai:
-- Salah satu fitur operasional inti
-
-Kegiatan:
-- Memperlihatkan perkembangan siswa di luar nilai akademik
-
-Rekomendasi sekolah:
-- Menjadi fitur pembeda / nilai tambah sistem
-
-
-===============================================================================
-38. PENUTUP
+35. PENUTUP
 ===============================================================================
 
 Website Damar Project School adalah portal sekolah multi-role yang menggabungkan:
@@ -1271,6 +1189,5 @@ biasanya adalah:
 - menambah export Excel/PDF
 - memperkuat indexing database
 - menambah activity log audit trail
-
 
 END OF DOCUMENT
