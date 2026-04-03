@@ -6,7 +6,9 @@ Portal sekolah berbasis Laravel untuk admin, guru, dan wali murid, lengkap denga
 
 ### 1. How to start project
 
-Pertama-tama kamu harus tekan tombol ( Ctrl + ` ), simbol itu ada disebelah kiri angka 1, atau simplenya buka saja terminal
+Setelag buka VSCODE,
+Pertama-tama kamu harus tekan tombol ( Ctrl + ` ), simbol itu ada disebelah kiri angka 1, atau simplenya buka saja terminal VSCODE
+Bebas mau powershell atau cmd
 Lalu jalankan command-command dibawah berikutnya
 
 ### 2. Install dependency backend
