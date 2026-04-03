@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Guru;
@@ -9,7 +10,7 @@ use App\Http\Controllers\User;
 use Illuminate\Support\Facades\Route;
 
 // ── Public / Guest ────────────────────────────────────────────────────────────
-Route::get('/', fn() => redirect()->route('login'));
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login',    [LoginController::class,    'showLoginForm'])->name('login');

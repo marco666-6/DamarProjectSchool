@@ -23,7 +23,7 @@ class SekolahInfoController extends Controller
             'nama_sekolah'  => ['required', 'string', 'max:255'],
             'singkatan'     => ['required', 'string', 'max:20'],
             'visi'          => ['nullable', 'string'],
-            'misi'          => ['nullable', 'string'],
+            'misi_text'     => ['nullable', 'string'],
             'sejarah'       => ['nullable', 'string'],
             'kepala_sekolah'=> ['nullable', 'string', 'max:255'],
             'npsn'          => ['nullable', 'string', 'max:20'],
@@ -36,10 +36,24 @@ class SekolahInfoController extends Controller
             'email'         => ['nullable', 'email'],
             'website'       => ['nullable', 'url'],
             'akreditasi'    => ['required', 'in:A,B,C,Belum'],
-            'fasilitas'     => ['nullable', 'array'],
+            'fasilitas_text'=> ['nullable', 'string'],
             'logo'          => ['nullable', 'image', 'max:1024'],
             'foto_sekolah'  => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $data['misi'] = collect(preg_split('/\r\n|\r|\n/', $data['misi_text'] ?? ''))
+            ->map(fn ($item) => trim($item))
+            ->filter()
+            ->values()
+            ->all();
+
+        $data['fasilitas'] = collect(preg_split('/\r\n|\r|\n/', $data['fasilitas_text'] ?? ''))
+            ->map(fn ($item) => trim($item))
+            ->filter()
+            ->values()
+            ->all();
+
+        unset($data['misi_text'], $data['fasilitas_text']);
 
         if ($request->hasFile('logo')) {
             if ($sekolah->logo) Storage::disk('public')->delete($sekolah->logo);
