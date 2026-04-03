@@ -4,18 +4,10 @@ Portal sekolah berbasis Laravel untuk admin, guru, dan wali murid, lengkap denga
 
 ## Clone And Run
 
-### 1. Clone project
+### 1. How to start project
 
-```bash
-git clone <URL_REPOSITORY>
-cd DamarProjectSchool
-```
-
-Jika project didapat dari folder lokal, cukup masuk ke folder project:
-
-```bash
-cd DamarProjectSchool
-```
+Pertama-tama kamu harus tekan tombol ( Ctrl + ` ), simbol itu ada disebelah kiri angka 1, atau simplenya buka saja terminal
+Lalu jalankan command-command dibawah berikutnya
 
 ### 2. Install dependency backend
 
@@ -23,13 +15,9 @@ cd DamarProjectSchool
 composer install
 ```
 
-### 3. Install dependency frontend
+lalu
 
-```bash
-npm install
-```
-
-### 4. Buat file environment
+### 3. Buat file environment
 
 Windows PowerShell:
 
@@ -37,79 +25,52 @@ Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-Atau manual copy `.env.example` menjadi `.env`.
+Atau kalau error dan ternyata CMD:
+```cmd
+cp .env.example .env
+```
 
-### 5. Generate app key
+lalu
+
+### 4. Generate app key
 
 ```bash
 php artisan key:generate
 ```
 
-### 6. Atur database di `.env`
+lalu
 
-Contoh:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=damar_project_school
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-Pastikan database sudah dibuat lebih dulu di MySQL.
-
-### 7. Jalankan migration
+### 5. Jalankan migration
 
 ```bash
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
-### 8. Buat storage link
+lalu
+
+### 6. Buat storage link
 
 ```bash
 php artisan storage:link
 ```
 
-### 9. Jalankan backend
+lalu
+
+### 7. Jalankan backend
 
 ```bash
 php artisan serve
 ```
 
-### 10. Jalankan frontend
-
-```bash
-npm run dev
-```
-
-Lalu buka:
+Lalu buka :
 
 ```text
 http://127.0.0.1:8000
 ```
 
-### Opsi cepat
+dengan cara ketik di browser atau tekan ( Ctrl + Klik ) di link di terminal:
+![Tuts](ignore/Tuts.png)
 
-Project ini juga punya helper script:
-
-```bash
-composer run setup
-composer run dev
-```
-
-## Testing
-
-```bash
-php artisan test
-```
-
-Atau:
-
-```bash
-composer test
-```
 
 ## Fitur Utama
 
