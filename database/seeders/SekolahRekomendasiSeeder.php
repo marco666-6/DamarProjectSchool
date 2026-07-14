@@ -160,9 +160,17 @@ class SekolahRekomendasiSeeder extends Seeder
                 $kriteria = $kriteriaMap[$kode] ?? null;
                 if (!$kriteria) continue;
 
+                $keterangan = match ($kode) {
+                    'C1' => $nilai > 0 ? 'SPP Rp ' . number_format($nilai, 0, ',', '.') . '/bulan' : 'SPP gratis',
+                    'C2' => 'Akreditasi ' . $s['akreditasi'],
+                    'C3' => count($s['fasilitas']) . ' fasilitas utama',
+                    'C4' => 'Estimasi ' . $nilai . ' km dari pusat kota Batam',
+                    default => null,
+                };
+
                 NilaiKriteria::updateOrCreate(
                     ['sekolah_id' => $sekolah->id, 'kriteria_id' => $kriteria->id],
-                    ['nilai' => $nilai]
+                    ['nilai' => $nilai, 'keterangan' => $keterangan]
                 );
             }
         }

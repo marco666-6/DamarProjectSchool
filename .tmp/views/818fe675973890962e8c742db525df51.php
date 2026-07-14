@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Damar Project School')</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', 'Damar Project School'); ?></title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -214,22 +214,22 @@
             }
         }
     </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 
 <body>
-    @php
+    <?php
         $schoolInfo = $school ?? \App\Models\SekolahInfo::getInstance();
-    @endphp
+    ?>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="navbar-brand" href="<?php echo e(route('home')); ?>">
                 <span class="brand-logo">
-                    <img src="{{ $schoolInfo->logo_url }}" alt="{{ $schoolName ?? 'Logo sekolah' }}">
+                    <img src="<?php echo e($schoolInfo->logo_url); ?>" alt="<?php echo e($schoolName ?? 'Logo sekolah'); ?>">
                 </span>
                 <span>
-                    <span class="d-block brand-title">{{ $schoolName ?? 'Damar Project School' }}</span>
-                    <span class="brand-subtitle">{{ $schoolShortName ?? 'Portal Profil & Akademik' }}</span>
+                    <span class="d-block brand-title"><?php echo e($schoolName ?? 'Damar Project School'); ?></span>
+                    <span class="brand-subtitle"><?php echo e($schoolShortName ?? 'Portal Profil & Akademik'); ?></span>
                 </span>
             </a>
 
@@ -240,7 +240,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                        <a class="nav-link <?php echo e(request()->routeIs('home') ? 'active' : ''); ?>" href="<?php echo e(route('home')); ?>">
                             <i class="bi bi-house-door me-1"></i>Beranda
                         </a>
                     </li>
@@ -264,22 +264,23 @@
                             <i class="bi bi-envelope me-1"></i>Kontak
                         </a>
                     </li>
-                    @auth
+                    <?php if(auth()->guard()->check()): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-1"></i>{{ auth()->user()->name }}
+                                <i class="bi bi-person-circle me-1"></i><?php echo e(auth()->user()->name); ?>
+
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('dashboard') }}"><i
+                                <li><a class="dropdown-item" href="<?php echo e(route('dashboard')); ?>"><i
                                             class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
-                                <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i
+                                <li><a class="dropdown-item" href="<?php echo e(route('profile.show')); ?>"><i
                                             class="bi bi-person me-2"></i>Profil</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
+                                    <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                        <?php echo csrf_field(); ?>
                                         <button type="submit" class="dropdown-item text-danger">
                                             <i class="bi bi-box-arrow-right me-2"></i>Logout
                                         </button>
@@ -287,38 +288,38 @@
                                 </li>
                             </ul>
                         </li>
-                    @else
+                    <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">
+                            <a class="nav-link" href="<?php echo e(route('login')); ?>">
                                 <i class="bi bi-box-arrow-in-right me-1"></i>Login
                             </a>
                         </li>
-                    @endauth
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
 
     <main>
-        @if(session('success') || session('error'))
+        <?php if(session('success') || session('error')): ?>
             <div class="container pt-4">
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                @if(session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
+                <?php if(session('success')): ?>
+                    <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+                <?php endif; ?>
+                <?php if(session('error')): ?>
+                    <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+                <?php endif; ?>
             </div>
-        @endif
+        <?php endif; ?>
 
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <footer class="py-5">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-4">
-                    <h5 class="fw-bold mb-3">{{ $schoolName ?? 'Damar Project School' }}</h5>
+                    <h5 class="fw-bold mb-3"><?php echo e($schoolName ?? 'Damar Project School'); ?></h5>
                     <p class="mb-0 text-light-emphasis">Portal profil sekolah, informasi akademik, dan layanan orang tua
                         dengan tampilan yang lebih informatif dan ramah pengguna.</p>
                 </div>
@@ -329,7 +330,7 @@
                                 terbaru</a></li>
                         <li class="mb-2"><a href="#statistik"><i class="bi bi-chevron-right me-2"></i>Statistik
                                 sekolah</a></li>
-                        <li class="mb-2"><a href="{{ route('login') }}"><i class="bi bi-chevron-right me-2"></i>Masuk ke
+                        <li class="mb-2"><a href="<?php echo e(route('login')); ?>"><i class="bi bi-chevron-right me-2"></i>Masuk ke
                                 portal</a></li>
                     </ul>
                 </div>
@@ -337,17 +338,19 @@
                     <h6 class="fw-bold mb-3">Kontak Sekolah</h6>
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2"><i
-                                class="bi bi-geo-alt me-2"></i>{{ $contactAddress ?? 'Alamat sekolah belum tersedia' }}
+                                class="bi bi-geo-alt me-2"></i><?php echo e($contactAddress ?? 'Alamat sekolah belum tersedia'); ?>
+
                         </li>
-                        <li class="mb-2"><i class="bi bi-telephone me-2"></i>{{ $contactPhone ?? '-' }}</li>
-                        <li class="mb-2"><i class="bi bi-envelope me-2"></i>{{ $contactEmail ?? '-' }}</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i><?php echo e($contactPhone ?? '-'); ?></li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i><?php echo e($contactEmail ?? '-'); ?></li>
                     </ul>
                 </div>
             </div>
             <hr class="border-light opacity-25 my-4">
             <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
-                <p class="mb-0 text-light-emphasis">&copy; {{ date('Y') }}
-                    {{ $schoolShortName ?? 'Damar Project School' }}. All rights reserved.
+                <p class="mb-0 text-light-emphasis">&copy; <?php echo e(date('Y')); ?>
+
+                    <?php echo e($schoolShortName ?? 'Damar Project School'); ?>. All rights reserved.
                 </p>
                 <p class="mb-0 text-light-emphasis">Built for school information, parent access, and recommendation
                     workflows.</p>
@@ -366,7 +369,7 @@
             }
         });
     </script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
-</html>
+</html><?php /**PATH C:\Users\ASUS\Downloads\ALLIMPORTANTPROJECTS\DamarProjectSchool\resources\views/layouts/public.blade.php ENDPATH**/ ?>

@@ -61,6 +61,10 @@ class SekolahRekomendasiController extends Controller
             'foto'             => ['nullable', 'image', 'max:2048'],
             'jumlah_siswa'     => ['nullable', 'integer'],
             'jumlah_guru'      => ['nullable', 'integer'],
+            'nilai_kriteria'   => ['nullable', 'array'],
+            'nilai_kriteria.*' => ['nullable', 'numeric', 'min:0'],
+            'keterangan_kriteria'   => ['nullable', 'array'],
+            'keterangan_kriteria.*' => ['nullable', 'string'],
         ]);
 
         if ($request->hasFile('foto')) {
@@ -116,6 +120,10 @@ class SekolahRekomendasiController extends Controller
             'jumlah_siswa'     => ['nullable', 'integer'],
             'jumlah_guru'      => ['nullable', 'integer'],
             'is_active'        => ['boolean'],
+            'nilai_kriteria'   => ['nullable', 'array'],
+            'nilai_kriteria.*' => ['nullable', 'numeric', 'min:0'],
+            'keterangan_kriteria'   => ['nullable', 'array'],
+            'keterangan_kriteria.*' => ['nullable', 'string'],
         ]);
 
         if ($request->hasFile('foto')) {
@@ -157,7 +165,13 @@ class SekolahRekomendasiController extends Controller
     {
         $nilaiData = $request->input('nilai_kriteria', []);
         foreach ($nilaiData as $kriteriaId => $nilai) {
-            if ($nilai === null || $nilai === '') continue;
+            if ($nilai === null || $nilai === '') {
+                NilaiKriteria::where('sekolah_id', $sekolahId)
+                    ->where('kriteria_id', $kriteriaId)
+                    ->delete();
+                continue;
+            }
+
             NilaiKriteria::updateOrCreate(
                 ['sekolah_id' => $sekolahId, 'kriteria_id' => $kriteriaId],
                 ['nilai' => $nilai, 'keterangan' => $request->input("keterangan_kriteria.{$kriteriaId}")]

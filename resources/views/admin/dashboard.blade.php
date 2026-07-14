@@ -12,7 +12,7 @@
     .student-highlight:last-child { border-bottom: none; padding-bottom: 0; }
     .student-highlight img, .student-avatar {
         width: 52px; height: 52px; border-radius: 18px; object-fit: cover;
-        background: rgba(25,135,84,.12); display: grid; place-items: center; color: #198754; font-weight: 700;
+        background: rgba(18,40,108,.12); display: grid; place-items: center; color: #12286C; font-weight: 700;
     }
 </style>
 @endpush
@@ -317,7 +317,7 @@
         let chart;
 
         function palette() {
-            return ['#198754', '#34a853', '#95d5b2', '#0f5d3a', '#2dd4bf', '#84cc16'];
+            return ['#12286C', '#E1B354', '#4D66A8', '#0D1E4F', '#6C8BE3', '#C79D3A'];
         }
 
         function renderChart() {
@@ -334,9 +334,9 @@
                     datasets: [{
                         label: current.label,
                         data: current.values,
-                        borderColor: '#198754',
-                        backgroundColor: type === 'doughnut' ? palette() : 'rgba(25, 135, 84, .2)',
-                        pointBackgroundColor: '#0f5d3a',
+                        borderColor: '#12286C',
+                        backgroundColor: type === 'doughnut' ? palette() : 'rgba(18, 40, 108, .2)',
+                        pointBackgroundColor: '#0D1E4F',
                         fill: type === 'line',
                         tension: .34,
                         borderWidth: 2

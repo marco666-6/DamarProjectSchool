@@ -60,6 +60,19 @@
                value="{{ old('pekerjaan_orangtua', $siswa?->pekerjaan_orangtua) }}">
     </div>
     <div class="col-md-6">
+        <label class="form-label small fw-semibold">Akun Wali Murid</label>
+        <select name="user_id" class="form-select @error('user_id') is-invalid @enderror">
+            <option value="">Belum dihubungkan</option>
+            @foreach(($parentUsers ?? collect()) as $parentUser)
+                <option value="{{ $parentUser->id }}" {{ (string) old('user_id', $siswa?->user_id) === (string) $parentUser->id ? 'selected' : '' }}>
+                    {{ $parentUser->name }} - {{ $parentUser->email }}
+                </option>
+            @endforeach
+        </select>
+        <div class="form-text">Pilih akun orang tua agar siswa muncul di dashboard wali murid.</div>
+        @error('user_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+    </div>
+    <div class="col-md-6">
         <label class="form-label small fw-semibold">No. HP Orang Tua</label>
         <input type="text" name="phone_orangtua" class="form-control"
                value="{{ old('phone_orangtua', $siswa?->phone_orangtua) }}">

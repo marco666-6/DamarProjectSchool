@@ -56,7 +56,7 @@
                                                    placeholder="Contoh: 5" min="0" max="100" step="1">
                                             <span class="input-group-text">km maksimal</span>
                                         </div>
-                                        <div class="form-text">Isi perkiraan jarak terjauh yang masih nyaman bagi Anda.</div>
+                                        <div class="form-text">Saat ini nilai jarak memakai estimasi dari pusat kota Batam, bukan dari alamat rumah.</div>
                                     @else
                                         <input type="number" name="pref_{{ $k->id }}" class="form-control"
                                                placeholder="Isi angka yang sesuai dengan penjelasan di atas" step="any">

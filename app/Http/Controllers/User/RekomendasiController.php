@@ -41,6 +41,12 @@ class RekomendasiController extends Controller
     {
         $kriteriaList = Kriteria::active()->get();
 
+        $rules = [];
+        foreach ($kriteriaList as $k) {
+            $rules['pref_' . $k->id] = ['nullable', 'numeric', 'min:0'];
+        }
+        $request->validate($rules);
+
         // Build preferensi array from form: kriteria_id => user_value
         $preferensi = [];
         foreach ($kriteriaList as $k) {
@@ -91,6 +97,8 @@ class RekomendasiController extends Controller
      */
     public function detailSekolah(SekolahRekomendasi $sekolah)
     {
+        abort_unless($sekolah->is_active, 404);
+
         $sekolah->load('nilaiKriteria.kriteria');
         $kriteriaList = Kriteria::active()->get();
 

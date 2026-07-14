@@ -38,6 +38,7 @@
                     <th>NISN</th>
                     <th>Kelas</th>
                     <th>Nama Orang Tua</th>
+                    <th>Akun Wali</th>
                     <th>Status</th>
                     <th class="text-end pe-3">Aksi</th>
                 </tr>
@@ -50,6 +51,14 @@
                 <td class="text-muted small">{{ $s->nisn }}</td>
                 <td><span class="badge bg-primary">{{ $s->kelas }}</span></td>
                 <td>{{ $s->nama_orangtua }}</td>
+                <td>
+                    @if($s->user)
+                        <div class="fw-semibold small">{{ $s->user->name }}</div>
+                        <div class="text-muted small">{{ $s->user->email }}</div>
+                    @else
+                        <span class="badge bg-light text-muted border">Belum terhubung</span>
+                    @endif
+                </td>
                 <td>
                     @if($s->is_active)
                         <span class="badge bg-success">Aktif</span>
@@ -69,7 +78,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="7" class="text-center text-muted py-4">Tidak ada data siswa ditemukan.</td></tr>
+            <tr><td colspan="8" class="text-center text-muted py-4">Tidak ada data siswa ditemukan.</td></tr>
             @endforelse
             </tbody>
         </table>

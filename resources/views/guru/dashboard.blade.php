@@ -10,8 +10,8 @@
     .highlight-card {
         border-radius: 22px;
         padding: 1rem;
-        background: rgba(25,135,84,.06);
-        border: 1px solid rgba(25,135,84,.08);
+        background: rgba(18,40,108,.06);
+        border: 1px solid rgba(18,40,108,.08);
     }
 </style>
 @endpush
@@ -234,11 +234,11 @@
                     datasets: [{
                         label: current.label,
                         data: current.values,
-                        borderColor: '#198754',
+                        borderColor: '#12286C',
                         backgroundColor: type === 'doughnut'
-                            ? ['#198754', '#34a853', '#95d5b2', '#0f5d3a', '#2dd4bf']
-                            : 'rgba(25, 135, 84, .18)',
-                        pointBackgroundColor: '#0f5d3a',
+                            ? ['#12286C', '#E1B354', '#4D66A8', '#0D1E4F', '#6C8BE3']
+                            : 'rgba(18, 40, 108, .18)',
+                        pointBackgroundColor: '#0D1E4F',
                         fill: type === 'line',
                         tension: .34,
                         borderWidth: 2

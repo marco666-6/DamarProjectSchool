@@ -15,6 +15,10 @@
                 <hr>
                 <div class="text-start small">
                     <div class="d-flex justify-content-between py-1"><span class="text-muted">Orang Tua</span><span>{{ $siswa->nama_orangtua }}</span></div>
+                    <div class="d-flex justify-content-between py-1 gap-3">
+                        <span class="text-muted">Akun Wali</span>
+                        <span class="text-end">{{ $siswa->user ? $siswa->user->name . ' (' . $siswa->user->email . ')' : '-' }}</span>
+                    </div>
                     <div class="d-flex justify-content-between py-1"><span class="text-muted">Pekerjaan</span><span>{{ $siswa->pekerjaan_orangtua ?? '-' }}</span></div>
                     <div class="d-flex justify-content-between py-1"><span class="text-muted">HP Ortu</span><span>{{ $siswa->phone_orangtua ?? '-' }}</span></div>
                     <div class="d-flex justify-content-between py-1"><span class="text-muted">L/P</span><span>{{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}</span></div>

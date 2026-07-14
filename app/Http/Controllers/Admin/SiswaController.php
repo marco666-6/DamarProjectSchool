@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class SiswaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Siswa::query();
+        $query = Siswa::with('user');
 
         if ($search = $request->get('search')) {
             $query->where(function ($q) use ($search) {
@@ -38,7 +40,9 @@ class SiswaController extends Controller
 
     public function create()
     {
-        return view('admin.siswa.create');
+        $parentUsers = $this->parentUsers();
+
+        return view('admin.siswa.create', compact('parentUsers'));
     }
 
     public function store(Request $request)
@@ -56,6 +60,7 @@ class SiswaController extends Controller
             'jenis_kelamin'      => ['nullable', 'in:L,P'],
             'kelas'              => ['nullable', 'string', 'max:10'],
             'tahun_masuk'        => ['nullable', 'integer', 'min:2000', 'max:2100'],
+            'user_id'            => ['nullable', Rule::exists('users', 'id')->where('role', 'user')],
             'foto'               => ['nullable', 'image', 'max:2048'],
         ]);
 
@@ -71,13 +76,15 @@ class SiswaController extends Controller
 
     public function show(Siswa $siswa)
     {
-        $siswa->load(['nilai.mataPelajaran', 'kegiatan']);
+        $siswa->load(['user', 'nilai.mataPelajaran', 'kegiatan']);
         return view('admin.siswa.show', compact('siswa'));
     }
 
     public function edit(Siswa $siswa)
     {
-        return view('admin.siswa.edit', compact('siswa'));
+        $parentUsers = $this->parentUsers();
+
+        return view('admin.siswa.edit', compact('siswa', 'parentUsers'));
     }
 
     public function update(Request $request, Siswa $siswa)
@@ -95,6 +102,7 @@ class SiswaController extends Controller
             'jenis_kelamin'      => ['nullable', 'in:L,P'],
             'kelas'              => ['nullable', 'string', 'max:10'],
             'tahun_masuk'        => ['nullable', 'integer', 'min:2000', 'max:2100'],
+            'user_id'            => ['nullable', Rule::exists('users', 'id')->where('role', 'user')],
             'foto'               => ['nullable', 'image', 'max:2048'],
             'is_active'          => ['boolean'],
         ]);
@@ -118,5 +126,12 @@ class SiswaController extends Controller
 
         return redirect()->route('admin.siswa.index')
             ->with('success', 'Data siswa berhasil dihapus.');
+    }
+
+    private function parentUsers()
+    {
+        return User::where('role', 'user')
+            ->orderBy('name')
+            ->get(['id', 'name', 'email']);
     }
 }

@@ -71,7 +71,13 @@
                     </span>
                 </td>
                 <td class="small text-muted">{{ $s->kecamatan??'-' }}</td>
-                <td class="small">{{ $s->biaya_spp > 0 ? $s->biaya_spp_format : '<span class="badge bg-success">Gratis</span>' }}</td>
+                <td class="small">
+                    @if($s->biaya_spp > 0)
+                        {{ $s->biaya_spp_format }}
+                    @else
+                        <span class="badge bg-success">Gratis</span>
+                    @endif
+                </td>
                 <td>
                     @if($s->is_active)<span class="badge bg-success">Aktif</span>
                     @else<span class="badge bg-secondary">Nonaktif</span>@endif

@@ -141,14 +141,21 @@ class SawService
             }
 
             $max = max($column) ?: 1;
-            $min = min($column) ?: 1;
+
+            $positiveValues = array_filter($column, fn($value) => $value > 0);
+            $minPositive = $positiveValues ? min($positiveValues) : null;
 
             foreach ($column as $sid => $val) {
                 if ($k->jenis === 'benefit') {
                     $normalized[$sid][$kid] = $max > 0 ? $val / $max : 0;
                 } else {
-                    // cost
-                    $normalized[$sid][$kid] = $val > 0 ? $min / $val : 0;
+                    if ($val == 0.0) {
+                        $normalized[$sid][$kid] = 1.0;
+                    } elseif ($minPositive !== null) {
+                        $normalized[$sid][$kid] = $minPositive / $val;
+                    } else {
+                        $normalized[$sid][$kid] = 1.0;
+                    }
                 }
             }
         }
@@ -199,10 +206,9 @@ class SawService
                     $schoolVal = $row[$kid];
 
                     if ($k->jenis === 'cost') {
-                        // Penalise schools that cost more than user's budget
+                        // Penalize schools that exceed the user's maximum instead of making them look cheaper.
                         if ($schoolVal > $userVal && $userVal > 0) {
-                            // Scale down proportionally
-                            $row[$kid] = $userVal; // cap at budget
+                            $row[$kid] = $schoolVal * ($schoolVal / $userVal);
                         }
                     } else {
                         // Benefit: zero out schools below minimum

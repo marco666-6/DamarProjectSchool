@@ -1,8 +1,6 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', ($school->nama_sekolah ?: 'Damar Project School') . ' - Profil Sekolah'); ?>
 
-@section('title', ($school->nama_sekolah ?: 'Damar Project School') . ' - Profil Sekolah')
-
-@php
+<?php
 $schoolName = $school->nama_sekolah ?: 'Damar Project School';
 $schoolShortName = $school->singkatan ?: 'Damar Project School';
 $contactAddress = trim(implode(', ', array_filter([$school->alamat, $school->kota, $school->provinsi])));
@@ -10,9 +8,9 @@ $contactPhone = $school->phone;
 $contactEmail = $school->email;
 $headlineAnnouncements = $announcements->take(3);
 $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
-@endphp
+?>
 
-@push('styles')
+<?php $__env->startPush('styles'); ?>
 <style>
 .hero-section {
     padding: 4.5rem 0 2.5rem;
@@ -20,7 +18,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 
 .hero-shell {
     background: linear-gradient(135deg, rgba(18, 40, 108, .96) 0%, rgba(225, 179, 84, .92) 100%),
-    url('{{ $school->foto_url }}') center/cover;
+    url('<?php echo e($school->foto_url); ?>') center/cover;
     border-radius: 32px;
     padding: 3rem;
     position: relative;
@@ -141,9 +139,9 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
     }
 }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <section class="hero-section">
     <div class="container">
         <div class="hero-shell">
@@ -153,12 +151,13 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                         <i class="bi bi-stars"></i>
                         Profil Sekolah dan Portal Informasi
                     </span>
-                    <h1 class="hero-title">{{ $school->nama_sekolah ?: 'Damar Project School' }}</h1>
+                    <h1 class="hero-title"><?php echo e($school->nama_sekolah ?: 'Damar Project School'); ?></h1>
                     <p class="hero-text mt-3 mb-4">
-                        {{ $school->visi ?: 'Profil sekolah, pengumuman penting, dan akses portal akademik dalam satu tampilan yang lebih ringan dan fokus.' }}
+                        <?php echo e($school->visi ?: 'Profil sekolah, pengumuman penting, dan akses portal akademik dalam satu tampilan yang lebih ringan dan fokus.'); ?>
+
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ route('login') }}" class="btn btn-light btn-lg rounded-pill px-4">
+                        <a href="<?php echo e(route('login')); ?>" class="btn btn-light btn-lg rounded-pill px-4">
                             <i class="bi bi-box-arrow-in-right me-2"></i>Masuk ke Portal
                         </a>
                         <a href="#pengumuman" class="btn btn-outline-light btn-lg rounded-pill px-4">
@@ -174,26 +173,27 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                             </div>
                             <div>
                                 <div class="small text-white-50">Akreditasi</div>
-                                <div class="fs-4 fw-bold">{{ $school->akreditasi ?: 'Belum diatur' }}</div>
+                                <div class="fs-4 fw-bold"><?php echo e($school->akreditasi ?: 'Belum diatur'); ?></div>
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-6">
                                 <div class="border rounded-4 p-3 border-light border-opacity-25">
                                     <div class="small text-white-50">Kepala Sekolah</div>
-                                    <div class="fw-semibold">{{ $school->kepala_sekolah ?: 'Belum diisi' }}</div>
+                                    <div class="fw-semibold"><?php echo e($school->kepala_sekolah ?: 'Belum diisi'); ?></div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="border rounded-4 p-3 border-light border-opacity-25">
                                     <div class="small text-white-50">NPSN</div>
-                                    <div class="fw-semibold">{{ $school->npsn ?: '-' }}</div>
+                                    <div class="fw-semibold"><?php echo e($school->npsn ?: '-'); ?></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="border rounded-4 p-3 border-light border-opacity-25">
                                     <div class="small text-white-50">Lokasi</div>
-                                    <div class="fw-semibold">{{ $contactAddress ?: 'Alamat sekolah belum tersedia' }}
+                                    <div class="fw-semibold"><?php echo e($contactAddress ?: 'Alamat sekolah belum tersedia'); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="mini-metric">
                         <div class="icon"><i class="bi bi-people"></i></div>
                         <div>
-                            <div class="fs-3 fw-bold">{{ $stats['total_siswa'] }}</div>
+                            <div class="fs-3 fw-bold"><?php echo e($stats['total_siswa']); ?></div>
                             <div class="text-muted">Siswa aktif</div>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="mini-metric">
                         <div class="icon"><i class="bi bi-person-badge"></i></div>
                         <div>
-                            <div class="fs-3 fw-bold">{{ $stats['total_guru'] }}</div>
+                            <div class="fs-3 fw-bold"><?php echo e($stats['total_guru']); ?></div>
                             <div class="text-muted">Guru aktif</div>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="mini-metric">
                         <div class="icon"><i class="bi bi-graph-up"></i></div>
                         <div>
-                            <div class="fs-3 fw-bold">{{ number_format($stats['rata_nilai'], 1) }}</div>
+                            <div class="fs-3 fw-bold"><?php echo e(number_format($stats['rata_nilai'], 1)); ?></div>
                             <div class="text-muted">Rata-rata nilai</div>
                         </div>
                     </div>
@@ -242,7 +242,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="mini-metric">
                         <div class="icon"><i class="bi bi-calendar-event"></i></div>
                         <div>
-                            <div class="fs-3 fw-bold">{{ $stats['total_kegiatan'] }}</div>
+                            <div class="fs-3 fw-bold"><?php echo e($stats['total_kegiatan']); ?></div>
                             <div class="text-muted">Kegiatan tercatat</div>
                         </div>
                     </div>
@@ -260,22 +260,23 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="section-eyebrow">Profil</div>
                     <h2 class="section-title mt-2 mb-3">Informasi inti sekolah</h2>
                     <p class="text-muted mb-4">
-                        {{ $school->sejarah ?: 'Profil sekolah belum dilengkapi. Admin dapat memperbarui data profil agar informasi publik selalu konsisten dan terbaru.' }}
+                        <?php echo e($school->sejarah ?: 'Profil sekolah belum dilengkapi. Admin dapat memperbarui data profil agar informasi publik selalu konsisten dan terbaru.'); ?>
+
                     </p>
 
                     <div class="info-strip mb-3">
                         <div class="fw-bold text-success mb-2">Visi</div>
-                        <div class="text-muted">{{ $school->visi ?: 'Belum tersedia' }}</div>
+                        <div class="text-muted"><?php echo e($school->visi ?: 'Belum tersedia'); ?></div>
                     </div>
 
                     <div class="info-strip">
                         <div class="fw-bold text-success mb-2">Fasilitas Utama</div>
                         <ul class="mb-0 ps-3 text-muted">
-                            @forelse($headlineFacilities as $facility)
-                            <li>{{ $facility }}</li>
-                            @empty
+                            <?php $__empty_1 = true; $__currentLoopData = $headlineFacilities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $facility): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <li><?php echo e($facility); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <li>Daftar fasilitas belum diisi.</li>
-                            @endforelse
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -285,23 +286,25 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="section-eyebrow">Pengumuman</div>
                     <h2 class="section-title mt-2 mb-3">Informasi terbaru sekolah</h2>
                     <div class="d-flex flex-column gap-3">
-                        @forelse($headlineAnnouncements as $announcement)
+                        <?php $__empty_1 = true; $__currentLoopData = $headlineAnnouncements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $announcement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="announcement-card">
-                            <div class="announcement-meta mb-2">{{ $announcement->jenis_kegiatan }}</div>
-                            <h5 class="fw-bold mb-2">{{ $announcement->nama_kegiatan }}</h5>
+                            <div class="announcement-meta mb-2"><?php echo e($announcement->jenis_kegiatan); ?></div>
+                            <h5 class="fw-bold mb-2"><?php echo e($announcement->nama_kegiatan); ?></h5>
                             <p class="text-muted small mb-2">
-                                {{ \Illuminate\Support\Str::limit($announcement->deskripsi ?: 'Informasi kegiatan sekolah terbaru.', 100) }}
+                                <?php echo e(\Illuminate\Support\Str::limit($announcement->deskripsi ?: 'Informasi kegiatan sekolah terbaru.', 100)); ?>
+
                             </p>
                             <div class="small text-muted">
                                 <i
-                                    class="bi bi-calendar-event me-2"></i>{{ optional($announcement->tanggal_kegiatan ?? $announcement->created_at)->translatedFormat('d M Y') }}
+                                    class="bi bi-calendar-event me-2"></i><?php echo e(optional($announcement->tanggal_kegiatan ?? $announcement->created_at)->translatedFormat('d M Y')); ?>
+
                             </div>
                         </div>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <div class="announcement-card">
                             <p class="text-muted mb-0">Belum ada pengumuman yang tersimpan di database.</p>
                         </div>
-                        @endforelse
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -330,19 +333,19 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                     <div class="d-flex flex-column gap-3">
                         <div class="info-strip">
                             <div class="fw-bold text-success mb-2">Alamat</div>
-                            <div class="text-muted">{{ $contactAddress ?: 'Alamat sekolah belum tersedia' }}</div>
+                            <div class="text-muted"><?php echo e($contactAddress ?: 'Alamat sekolah belum tersedia'); ?></div>
                         </div>
                         <div class="info-strip">
                             <div class="fw-bold text-success mb-2">Telepon</div>
-                            <div class="text-muted">{{ $school->phone ?: '-' }}</div>
+                            <div class="text-muted"><?php echo e($school->phone ?: '-'); ?></div>
                         </div>
                         <div class="info-strip">
                             <div class="fw-bold text-success mb-2">Email</div>
-                            <div class="text-muted">{{ $school->email ?: '-' }}</div>
+                            <div class="text-muted"><?php echo e($school->email ?: '-'); ?></div>
                         </div>
                         <div class="info-strip">
                             <div class="fw-bold text-success mb-2">Website</div>
-                            <div class="text-muted">{{ $school->website ?: 'Belum diatur' }}</div>
+                            <div class="text-muted"><?php echo e($school->website ?: 'Belum diatur'); ?></div>
                         </div>
                     </div>
                 </div>
@@ -350,9 +353,9 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
         </div>
     </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -364,10 +367,10 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @json($scoreTrend -> pluck('semester')),
+            labels: <?php echo json_encode($scoreTrend -> pluck('semester'), 15, 512) ?>,
             datasets: [{
                 label: 'Rata-rata Nilai',
-                data: @json($scoreTrend->pluck('average_score')->map(fn ($value) => round((float) $value, 2))),
+                data: <?php echo json_encode($scoreTrend->pluck('average_score')->map(fn ($value) => round((float) $value, 2)), 512) ?>,
                 borderColor: '#12286C',
                 backgroundColor: 'rgba(18, 40, 108, 0.16)',
                 pointBackgroundColor: '#0D1E4F',
@@ -393,4 +396,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\ASUS\Downloads\ALLIMPORTANTPROJECTS\DamarProjectSchool\resources\views/home/index.blade.php ENDPATH**/ ?>

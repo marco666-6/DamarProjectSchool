@@ -10,7 +10,7 @@
     .child-card {
         padding: 1rem;
         border-radius: 20px;
-        border: 1px solid rgba(15, 93, 58, .08);
+        border: 1px solid rgba(18, 40, 108, .08);
         background: rgba(255,255,255,.78);
     }
     .child-card img { width: 56px; height: 56px; border-radius: 18px; object-fit: cover; }
@@ -185,7 +185,7 @@
                         @php $top = $lastRekomen->ranked_results[0] ?? null; @endphp
                         @if($top)
                             <div class="text-center mb-4">
-                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold mb-3" style="width:68px;height:68px;background:linear-gradient(135deg,#0f5d3a,#198754);font-size:1.4rem;">1</div>
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold mb-3" style="width:68px;height:68px;background:linear-gradient(135deg,#12286C,#E1B354);font-size:1.4rem;">1</div>
                                 <h4 class="fw-bold mb-1">{{ $top['sekolah']['nama_sekolah'] ?? '-' }}</h4>
                                 <div class="text-muted mb-2">{{ $top['sekolah']['jenis'] ?? '-' }} • Akreditasi {{ $top['sekolah']['akreditasi'] ?? '-' }}</div>
                                 <span class="badge badge-soft-success rounded-pill fs-6 px-3 py-2">Skor {{ $top['skor_total'] }}</span>
@@ -194,7 +194,7 @@
                         @endif
                     @else
                         <div class="text-center py-4">
-                            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:72px;height:72px;background:rgba(25,135,84,.12);color:#198754;">
+                            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:72px;height:72px;background:rgba(18,40,108,.12);color:#12286C;">
                                 <i class="bi bi-search fs-3"></i>
                             </div>
                             <h5 class="fw-bold">Belum ada rekomendasi</h5>
@@ -271,11 +271,11 @@
                     datasets: [{
                         label: current.label,
                         data: current.values,
-                        borderColor: '#198754',
+                        borderColor: '#12286C',
                         backgroundColor: type === 'doughnut'
-                            ? ['#198754', '#34a853', '#95d5b2', '#0f5d3a', '#2dd4bf']
-                            : 'rgba(25, 135, 84, .18)',
-                        pointBackgroundColor: '#0f5d3a',
+                            ? ['#12286C', '#E1B354', '#4D66A8', '#0D1E4F', '#6C8BE3']
+                            : 'rgba(18, 40, 108, .18)',
+                        pointBackgroundColor: '#0D1E4F',
                         fill: type === 'line',
                         tension: .34,
                         borderWidth: 2

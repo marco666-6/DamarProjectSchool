@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,49 +14,56 @@
             display: grid;
             place-items: center;
             background:
-                radial-gradient(circle at top left, rgba(52, 168, 83, .18), transparent 28%),
-                radial-gradient(circle at bottom right, rgba(15, 93, 58, .2), transparent 30%),
-                linear-gradient(135deg, #0d2a1d 0%, #0f5d3a 45%, #198754 100%);
+                radial-gradient(circle at top left, rgba(225, 179, 84, .18), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(18, 40, 108, .2), transparent 30%),
+                linear-gradient(135deg, #0D1E4F 0%, #12286C 45%, #E1B354 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 1.5rem;
         }
+
         .register-card {
             width: min(720px, 100%);
-            background: rgba(255,255,255,.94);
+            background: rgba(255, 255, 255, .94);
             border-radius: 30px;
-            box-shadow: 0 28px 60px rgba(0,0,0,.18);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, .18);
             padding: 2.4rem;
         }
+
         .hero-strip {
-            background: linear-gradient(135deg, rgba(15, 93, 58, .08), rgba(52, 168, 83, .16));
-            border: 1px solid rgba(25,135,84,.1);
+            background: linear-gradient(135deg, rgba(18, 40, 108, .08), rgba(225, 179, 84, .16));
+            border: 1px solid rgba(18, 40, 108, .1);
             border-radius: 24px;
             padding: 1.2rem 1.3rem;
         }
+
         .form-control {
             min-height: 52px;
             border-radius: 16px;
         }
+
         .form-control:focus {
-            border-color: #198754;
-            box-shadow: 0 0 0 .2rem rgba(25,135,84,.12);
+            border-color: #12286C;
+            box-shadow: 0 0 0 .2rem rgba(18, 40, 108, .12);
         }
+
         .btn-register {
             min-height: 52px;
             border: none;
             border-radius: 16px;
-            background: linear-gradient(135deg, #0f5d3a, #198754);
-            box-shadow: 0 16px 28px rgba(25,135,84,.18);
+            background: linear-gradient(135deg, #12286C, #E1B354);
+            box-shadow: 0 16px 28px rgba(18, 40, 108, .18);
         }
     </style>
 </head>
+
 <body>
     <div class="register-card">
         <div class="hero-strip d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
             <div>
                 <div class="text-success text-uppercase small fw-bold" style="letter-spacing:.18em;">Registrasi</div>
                 <h1 class="h2 fw-bold mb-1">Buat akun wali murid</h1>
-                <p class="text-muted mb-0">Akun baru akan langsung terhubung ke portal pengguna untuk melihat data siswa, nilai, kegiatan, dan rekomendasi sekolah.</p>
+                <p class="text-muted mb-0">Akun baru akan langsung terhubung ke portal pengguna untuk melihat data
+                    siswa, nilai, kegiatan, dan rekomendasi sekolah.</p>
             </div>
             <a href="{{ route('home') }}" class="btn btn-outline-success rounded-pill px-4">
                 <i class="bi bi-arrow-left me-2"></i>Kembali ke Beranda
@@ -67,32 +75,40 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Nama Lengkap</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="Nama orang tua / wali" required>
+                    <input type="text" name="name" value="{{ old('name') }}"
+                        class="form-control @error('name') is-invalid @enderror" placeholder="Nama orang tua / wali"
+                        required>
                     @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email@contoh.com" required>
+                    <input type="email" name="email" value="{{ old('email') }}"
+                        class="form-control @error('email') is-invalid @enderror" placeholder="email@contoh.com"
+                        required>
                     @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Nomor Telepon</label>
-                    <input type="text" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror" placeholder="08xxxxxxxxxx">
+                    <input type="text" name="phone" value="{{ old('phone') }}"
+                        class="form-control @error('phone') is-invalid @enderror" placeholder="08xxxxxxxxxx">
                     @error('phone')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Alamat</label>
-                    <input type="text" name="alamat" value="{{ old('alamat') }}" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat domisili">
+                    <input type="text" name="alamat" value="{{ old('alamat') }}"
+                        class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat domisili">
                     @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Password</label>
-                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Minimal 8 karakter" required>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Minimal 8 karakter" required>
                     @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="Ulangi password" required>
+                    <input type="password" name="password_confirmation" class="form-control"
+                        placeholder="Ulangi password" required>
                 </div>
             </div>
 
@@ -108,4 +124,5 @@
         </p>
     </div>
 </body>
+
 </html>
