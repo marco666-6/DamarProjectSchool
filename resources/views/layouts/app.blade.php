@@ -20,12 +20,12 @@
     <style>
     :root {
         --sidebar-width: 296px;
-        --primary: #12286C;
-        --primary-dark: #0D1E4F;
-        --primary-soft: rgba(18, 40, 108, .12);
-        --surface: #f4f8f5;
-        --panel: rgba(255, 255, 255, .92);
-        --ink: #123524;
+        --primary: #52648f;
+        --primary-dark: #314062;
+        --primary-soft: rgba(82, 100, 143, .11);
+        --surface: #f8faf7;
+        --panel: rgba(255, 255, 255, .94);
+        --ink: #263247;
     }
 
     * {
@@ -36,8 +36,8 @@
         margin: 0;
         min-height: 100vh;
         background:
-            radial-gradient(circle at top left, rgba(225, 179, 84, .14), transparent 22%),
-            radial-gradient(circle at bottom right, rgba(18, 40, 108, .12), transparent 24%),
+            radial-gradient(circle at top left, rgba(215, 184, 106, .10), transparent 22%),
+            radial-gradient(circle at bottom right, rgba(82, 100, 143, .09), transparent 24%),
             var(--surface);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #334155;
@@ -50,16 +50,16 @@
         inset: 0 auto 0 0;
         z-index: 1035;
         padding: 1.1rem;
-        background: linear-gradient(180deg, #0D1E4F 0%, #12286C 38%, #E1B354 100%);
-        box-shadow: 22px 0 45px rgba(15, 23, 42, .12);
+        background: linear-gradient(180deg, #f7f9fd 0%, #eef4fb 54%, #f7f0db 100%);
+        box-shadow: 22px 0 45px rgba(49, 64, 98, .08);
         display: flex;
         flex-direction: column;
     }
 
     .sidebar-shell {
-        border: 1px solid rgba(255, 255, 255, .08);
+        border: 1px solid rgba(82, 100, 143, .12);
         border-radius: 28px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+        background: rgba(255, 255, 255, .72);
         backdrop-filter: blur(8px);
         height: 100%;
         display: flex;
@@ -69,19 +69,20 @@
 
     .sidebar-brand {
         padding: 1.35rem 1.35rem 1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, .08);
+        border-bottom: 1px solid rgba(82, 100, 143, .10);
     }
 
     .sidebar-brand-badge {
         width: 52px;
         height: 52px;
         border-radius: 18px;
-        background: rgba(255, 255, 255, .12);
+        background: #fff;
         display: grid;
         place-items: center;
-        color: #fff;
+        color: var(--primary-dark);
         font-size: 1.4rem;
         overflow: hidden;
+        box-shadow: 0 12px 26px rgba(49, 64, 98, .12);
     }
 
     .sidebar-brand-badge img {
@@ -92,14 +93,14 @@
     }
 
     .sidebar-brand h5 {
-        color: #fff;
+        color: var(--ink);
         margin: 0;
         font-weight: 800;
         letter-spacing: -.02em;
     }
 
     .sidebar-brand small {
-        color: rgba(255, 255, 255, .64);
+        color: #64748b;
     }
 
     .sidebar-nav {
@@ -109,7 +110,7 @@
     }
 
     .nav-section {
-        color: rgba(255, 255, 255, .44);
+        color: #8a95a8;
         font-size: .68rem;
         letter-spacing: .18em;
         text-transform: uppercase;
@@ -118,7 +119,7 @@
     }
 
     .nav-link {
-        color: rgba(255, 255, 255, .82);
+        color: #526075;
         display: flex;
         align-items: center;
         gap: .85rem;
@@ -135,23 +136,25 @@
         display: grid;
         place-items: center;
         border-radius: 12px;
-        background: rgba(255, 255, 255, .08);
+        background: rgba(82, 100, 143, .10);
+        color: var(--primary-dark);
     }
 
     .nav-link:hover,
     .nav-link.active {
-        color: #fff;
-        background: rgba(255, 255, 255, .13);
+        color: var(--primary-dark);
+        background: rgba(255, 255, 255, .86);
+        box-shadow: 0 10px 22px rgba(49, 64, 98, .08);
         transform: translateX(3px);
     }
 
     .nav-link:hover i,
     .nav-link.active i {
-        background: rgba(255, 255, 255, .18);
+        background: rgba(215, 184, 106, .20);
     }
 
     .sidebar-footer {
-        border-top: 1px solid rgba(255, 255, 255, .08);
+        border-top: 1px solid rgba(82, 100, 143, .10);
         padding: 1rem 1.15rem 1.2rem;
     }
 
@@ -168,10 +171,10 @@
         height: 44px;
         border-radius: 16px;
         object-fit: cover;
-        background: rgba(255, 255, 255, .14);
+        background: #fff;
         display: grid;
         place-items: center;
-        color: #fff;
+        color: var(--primary-dark);
         font-weight: 700;
     }
 
@@ -195,10 +198,10 @@
 
     .topbar-inner {
         background: rgba(255, 255, 255, .86);
-        border: 1px solid rgba(18, 40, 108, .08);
+        border: 1px solid rgba(82, 100, 143, .10);
         border-radius: 26px;
         padding: 1rem 1.15rem;
-        box-shadow: 0 16px 38px rgba(15, 23, 42, .06);
+        box-shadow: 0 16px 38px rgba(49, 64, 98, .06);
         width: 100%;
         backdrop-filter: blur(10px);
     }
@@ -230,9 +233,9 @@
 
     .card,
     .dashboard-panel {
-        border: 1px solid rgba(18, 40, 108, .08);
+        border: 1px solid rgba(82, 100, 143, .10);
         border-radius: 26px;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, .06);
+        box-shadow: 0 18px 40px rgba(49, 64, 98, .06);
         background: var(--panel);
         backdrop-filter: blur(10px);
     }
@@ -249,8 +252,9 @@
 
     .hero-panel {
         padding: 1.4rem;
-        color: #fff;
-        background: linear-gradient(135deg, #12286C 0%, #0D1E4F 68%, #E1B354 100%);
+        color: var(--ink);
+        background: linear-gradient(135deg, rgba(255, 255, 255, .92) 0%, rgba(238, 244, 251, .92) 58%, rgba(247, 240, 219, .94) 100%);
+        border: 1px solid rgba(82, 100, 143, .10);
         overflow: hidden;
         position: relative;
     }
@@ -262,11 +266,11 @@
         height: 280px;
         right: -80px;
         bottom: -120px;
-        background: radial-gradient(circle, rgba(255, 255, 255, .16), transparent 68%);
+        background: radial-gradient(circle, rgba(215, 184, 106, .18), transparent 68%);
     }
 
     .hero-panel .muted {
-        color: rgba(255, 255, 255, .78);
+        color: #64748b;
     }
 
     .stat-card {
@@ -441,9 +445,9 @@
                     <div class="avatar-fallback">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
                     @endif
                     <div>
-                        <div class="text-white fw-semibold">
+                        <div class="fw-semibold" style="color:var(--ink);">
                             {{ \Illuminate\Support\Str::limit(auth()->user()->name, 22) }}</div>
-                        <div class="small text-white-50">{{ ucfirst(auth()->user()->role) }}</div>
+                        <div class="small text-muted">{{ ucfirst(auth()->user()->role) }}</div>
                     </div>
                 </div>
                 <div class="d-grid gap-2">
@@ -452,8 +456,8 @@
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button class="btn btn-sm w-100 text-white"
-                            style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);">
+                        <button class="btn btn-sm w-100"
+                            style="background:rgba(82,100,143,.08);border:1px solid rgba(82,100,143,.14);color:var(--primary-dark);">
                             <i class="bi bi-box-arrow-left me-1"></i>Logout
                         </button>
                     </form>

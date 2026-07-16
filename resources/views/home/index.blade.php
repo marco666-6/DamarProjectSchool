@@ -19,13 +19,15 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 }
 
 .hero-shell {
-    background: linear-gradient(135deg, rgba(18, 40, 108, .96) 0%, rgba(225, 179, 84, .92) 100%),
+    background: linear-gradient(135deg, rgba(255, 255, 255, .90) 0%, rgba(238, 244, 251, .84) 55%, rgba(247, 240, 219, .86) 100%),
     url('{{ $school->foto_url }}') center/cover;
+    background-blend-mode: screen;
     border-radius: 32px;
     padding: 3rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 28px 54px rgba(18, 40, 108, .22);
+    box-shadow: 0 28px 54px rgba(49, 64, 98, .12);
+    border: 1px solid rgba(82, 100, 143, .12);
 }
 
 .hero-shell::after {
@@ -34,7 +36,7 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
     inset: auto -10% -40% auto;
     width: 320px;
     height: 320px;
-    background: radial-gradient(circle, rgba(255, 255, 255, .16), transparent 68%);
+    background: radial-gradient(circle, rgba(215, 184, 106, .18), transparent 68%);
 }
 
 .hero-badge {
@@ -43,15 +45,15 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
     gap: .5rem;
     padding: .55rem .95rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, .16);
-    color: #fff;
+    background: rgba(82, 100, 143, .10);
+    color: #314062;
     font-size: .88rem;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
 .hero-title {
-    color: #fff;
+    color: #263247;
     font-size: clamp(2.1rem, 4.6vw, 3.8rem);
     line-height: 1.04;
     letter-spacing: -.04em;
@@ -60,16 +62,16 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 }
 
 .hero-text {
-    color: rgba(255, 255, 255, .86);
+    color: #526075;
     max-width: 620px;
     font-size: 1rem;
 }
 
 .hero-panel {
-    background: rgba(255, 255, 255, .12);
-    border: 1px solid rgba(255, 255, 255, .16);
+    background: rgba(255, 255, 255, .78);
+    border: 1px solid rgba(82, 100, 143, .10);
     backdrop-filter: blur(12px);
-    color: #fff;
+    color: #263247;
     border-radius: 24px;
     padding: 1.25rem;
 }
@@ -78,8 +80,8 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
     background: #fff;
     padding: 1.05rem 1.1rem;
     border-radius: 22px;
-    border: 1px solid rgba(18, 40, 108, .08);
-    box-shadow: 0 18px 34px rgba(15, 23, 42, .05);
+    border: 1px solid rgba(82, 100, 143, .10);
+    box-shadow: 0 18px 34px rgba(49, 64, 98, .05);
     height: 100%;
 }
 
@@ -89,8 +91,8 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
     display: grid;
     place-items: center;
     border-radius: 15px;
-    background: rgba(18, 40, 108, .12);
-    color: #12286C;
+    background: rgba(82, 100, 143, .10);
+    color: #314062;
     font-size: 1.25rem;
 }
 
@@ -105,8 +107,8 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 .announcement-card {
     background: rgba(255, 255, 255, .92);
     border-radius: 24px;
-    border: 1px solid rgba(18, 40, 108, .08);
-    box-shadow: 0 18px 34px rgba(15, 23, 42, .05);
+    border: 1px solid rgba(82, 100, 143, .10);
+    box-shadow: 0 18px 34px rgba(49, 64, 98, .05);
     height: 100%;
 }
 
@@ -116,14 +118,14 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 }
 
 .info-strip {
-    background: linear-gradient(135deg, rgba(18, 40, 108, .08), rgba(225, 179, 84, .14));
-    border: 1px solid rgba(18, 40, 108, .08);
+    background: linear-gradient(135deg, rgba(238, 244, 251, .72), rgba(247, 240, 219, .72));
+    border: 1px solid rgba(82, 100, 143, .10);
     border-radius: 20px;
     padding: 1.15rem;
 }
 
 .announcement-meta {
-    color: #12286C;
+    color: #52648f;
     font-size: .76rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -133,6 +135,12 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
 .chart-shell {
     position: relative;
     min-height: 280px;
+}
+
+.hero-section .btn-primary {
+    background: #52648f;
+    border-color: #52648f;
+    box-shadow: 0 14px 28px rgba(49, 64, 98, .14);
 }
 
 @media (max-width: 991.98px) {
@@ -158,10 +166,10 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                         {{ $school->visi ?: 'Profil sekolah, pengumuman penting, dan akses portal akademik dalam satu tampilan yang lebih ringan dan fokus.' }}
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ route('login') }}" class="btn btn-light btn-lg rounded-pill px-4">
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-lg rounded-pill px-4">
                             <i class="bi bi-box-arrow-in-right me-2"></i>Masuk ke Portal
                         </a>
-                        <a href="#pengumuman" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                        <a href="#pengumuman" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
                             <i class="bi bi-megaphone me-2"></i>Pengumuman
                         </a>
                     </div>
@@ -169,30 +177,30 @@ $headlineFacilities = collect($school->fasilitas ?? [])->take(4);
                 <div class="col-lg-5">
                     <div class="hero-panel">
                         <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="rounded-4 bg-white bg-opacity-10 p-3">
+                            <div class="rounded-4 bg-white p-3 shadow-sm">
                                 <i class="bi bi-award fs-3"></i>
                             </div>
                             <div>
-                                <div class="small text-white-50">Akreditasi</div>
+                                <div class="small text-muted">Akreditasi</div>
                                 <div class="fs-4 fw-bold">{{ $school->akreditasi ?: 'Belum diatur' }}</div>
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-6">
-                                <div class="border rounded-4 p-3 border-light border-opacity-25">
-                                    <div class="small text-white-50">Kepala Sekolah</div>
+                                <div class="border rounded-4 p-3">
+                                    <div class="small text-muted">Kepala Sekolah</div>
                                     <div class="fw-semibold">{{ $school->kepala_sekolah ?: 'Belum diisi' }}</div>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="border rounded-4 p-3 border-light border-opacity-25">
-                                    <div class="small text-white-50">NPSN</div>
+                                <div class="border rounded-4 p-3">
+                                    <div class="small text-muted">NPSN</div>
                                     <div class="fw-semibold">{{ $school->npsn ?: '-' }}</div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="border rounded-4 p-3 border-light border-opacity-25">
-                                    <div class="small text-white-50">Lokasi</div>
+                                <div class="border rounded-4 p-3">
+                                    <div class="small text-muted">Lokasi</div>
                                     <div class="fw-semibold">{{ $contactAddress ?: 'Alamat sekolah belum tersedia' }}
                                     </div>
                                 </div>

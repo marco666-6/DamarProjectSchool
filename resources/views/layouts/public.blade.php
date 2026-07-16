@@ -17,13 +17,12 @@
 
     <style>
         :root {
-            --primary-color: #12286C;
-            --primary-dark: #0D1E4F;
-            --primary-light: #4D66A8;
-            --gradient-start: #12286C;
-            --gradient-end: #E1B354;
-            --surface: #f5f9f6;
-            --ink: #123524;
+            --primary-color: #52648f;
+            --primary-dark: #314062;
+            --primary-light: #dfe7f6;
+            --accent: #d7b86a;
+            --surface: #f8faf7;
+            --ink: #263247;
         }
 
         * {
@@ -36,27 +35,29 @@
             display: flex;
             flex-direction: column;
             background:
-                radial-gradient(circle at top left, rgba(225, 179, 84, 0.18), transparent 24%),
-                radial-gradient(circle at bottom right, rgba(18, 40, 108, 0.14), transparent 28%),
+                radial-gradient(circle at top left, rgba(215, 184, 106, 0.12), transparent 24%),
+                radial-gradient(circle at bottom right, rgba(82, 100, 143, 0.10), transparent 28%),
                 var(--surface);
             color: #1f2937;
             padding-top: 76px;
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            box-shadow: 0 14px 34px rgba(18, 40, 108, 0.24);
+            background: rgba(255, 255, 255, .86);
+            border-bottom: 1px solid rgba(82, 100, 143, .12);
+            box-shadow: 0 14px 34px rgba(49, 64, 98, 0.08);
+            backdrop-filter: blur(14px);
             padding: .75rem 0;
             transition: all .3s ease;
         }
 
         .navbar.scrolled {
             padding: .5rem 0;
-            box-shadow: 0 18px 42px rgba(18, 40, 108, 0.28);
+            box-shadow: 0 18px 42px rgba(49, 64, 98, 0.12);
         }
 
         .navbar-brand {
-            color: #fff !important;
+            color: var(--ink) !important;
             display: flex;
             align-items: center;
             gap: .85rem;
@@ -67,11 +68,11 @@
             width: 46px;
             height: 46px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, .14);
+            background: #fff;
             display: grid;
             place-items: center;
             font-size: 1.35rem;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+            box-shadow: 0 10px 24px rgba(49, 64, 98, .14), inset 0 0 0 1px rgba(82, 100, 143, .10);
             overflow: hidden;
         }
 
@@ -90,11 +91,11 @@
         .brand-subtitle {
             font-size: .74rem;
             font-weight: 400;
-            opacity: .86;
+            color: #64748b;
         }
 
         .nav-link {
-            color: rgba(255, 255, 255, .9) !important;
+            color: #526075 !important;
             padding: .55rem 1rem !important;
             border-radius: 999px;
             font-weight: 500;
@@ -103,15 +104,24 @@
 
         .nav-link:hover,
         .nav-link.active {
-            background: rgba(255, 255, 255, .16);
-            color: #fff !important;
+            background: rgba(82, 100, 143, .08);
+            color: var(--primary-dark) !important;
+            box-shadow: inset 0 0 0 1px rgba(82, 100, 143, .10);
             transform: translateY(-1px);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(82, 100, 143, .18);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(34%) sepia(13%) saturate(1100%) hue-rotate(184deg) brightness(88%);
         }
 
         .dropdown-menu {
             border: none;
             border-radius: 18px;
-            box-shadow: 0 20px 50px rgba(18, 40, 108, 0.16);
+            box-shadow: 0 20px 50px rgba(49, 64, 98, 0.12);
             padding: .55rem;
         }
 
@@ -122,30 +132,30 @@
         }
 
         .dropdown-item:hover {
-            background: rgba(18, 40, 108, .1);
+            background: rgba(82, 100, 143, .10);
             color: var(--primary-dark);
         }
 
         .btn-gradient {
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            border: none;
-            color: #fff;
-            box-shadow: 0 16px 30px rgba(18, 40, 108, .18);
+            background: linear-gradient(135deg, #f1f5fb 0%, #f7efd8 100%);
+            border: 1px solid rgba(82, 100, 143, .14);
+            color: var(--primary-dark);
+            box-shadow: 0 16px 30px rgba(49, 64, 98, .10);
         }
 
         .btn-gradient:hover {
-            color: #fff;
+            color: var(--primary-dark);
             filter: brightness(.96);
         }
 
         .btn-soft {
-            background: rgba(18, 40, 108, .12);
+            background: rgba(82, 100, 143, .10);
             color: var(--primary-dark);
             border: 1px solid rgba(18, 40, 108, .12);
         }
 
         .btn-soft:hover {
-            background: rgba(225, 179, 84, .22);
+            background: rgba(215, 184, 106, .18);
             color: var(--primary-dark);
         }
 
@@ -165,9 +175,9 @@
 
         .glass-card,
         .card {
-            border: 1px solid rgba(18, 40, 108, .08);
+            border: 1px solid rgba(82, 100, 143, .10);
             border-radius: 24px;
-            box-shadow: 0 20px 45px rgba(18, 40, 108, .08);
+            box-shadow: 0 20px 45px rgba(49, 64, 98, .07);
         }
 
         .glass-card {
@@ -182,17 +192,18 @@
 
         footer {
             margin-top: auto;
-            background: linear-gradient(135deg, #0D1E4F 0%, #12286C 100%);
-            color: #ecfdf5;
+            background: linear-gradient(135deg, #eef4fb 0%, #f6f1de 100%);
+            color: #334155;
+            border-top: 1px solid rgba(82, 100, 143, .12);
         }
 
         footer a {
-            color: #86efac;
+            color: var(--primary-dark);
             text-decoration: none;
         }
 
         footer a:hover {
-            color: #fff;
+            color: #111827;
         }
 
         .alert {
@@ -207,11 +218,11 @@
             }
 
             .navbar-collapse {
-                background: linear-gradient(135deg, rgba(13, 30, 79, .98) 0%, rgba(18, 40, 108, .98) 100%);
+                background: rgba(255, 255, 255, .96);
                 border-radius: 20px;
                 margin-top: 1rem;
                 padding: 1rem;
-                box-shadow: 0 18px 38px rgba(15, 23, 42, .16);
+                box-shadow: 0 18px 38px rgba(15, 23, 42, .12);
             }
 
             .brand-subtitle {
