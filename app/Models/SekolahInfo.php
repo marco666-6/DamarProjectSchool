@@ -57,7 +57,7 @@ class SekolahInfo extends Model
         if ($this->logo) {
             return asset('storage/' . $this->logo);
         }
-        return asset('images/logo-biis.png');
+        return asset('logobiis.png');
     }
 
     public function getFotoUrlAttribute(): string

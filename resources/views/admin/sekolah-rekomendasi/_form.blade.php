@@ -142,8 +142,9 @@
             <div class="row g-3">
                 @foreach($kriteriaList as $k)
                     @php
-                        $existingNilai = isset($nilaiMap) ? $nilaiMap[$k->id]?->nilai : null;
-                        $existingKet = isset($nilaiMap) ? $nilaiMap[$k->id]?->keterangan : null;
+                        $existingKriteria = isset($nilaiMap) ? $nilaiMap->get($k->id) : null;
+                        $existingNilai = $existingKriteria?->nilai;
+                        $existingKet = $existingKriteria?->keterangan;
                     @endphp
                     <div class="col-md-6">
                         <div class="p-3 rounded border h-100">

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title><?php echo $__env->yieldContent('title', 'Damar Project School'); ?></title>
+    <?php
+        $schoolInfo = $school ?? \App\Models\SekolahInfo::getInstance();
+    ?>
+    <link rel="icon" type="image/png" href="<?php echo e($schoolInfo->logo_url); ?>">
+    <link rel="shortcut icon" href="<?php echo e($schoolInfo->logo_url); ?>">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -218,9 +223,6 @@
 </head>
 
 <body>
-    <?php
-        $schoolInfo = $school ?? \App\Models\SekolahInfo::getInstance();
-    ?>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="<?php echo e(route('home')); ?>">
@@ -372,4 +374,5 @@
     <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
-</html><?php /**PATH C:\Users\ASUS\Downloads\ALLIMPORTANTPROJECTS\DamarProjectSchool\resources\views/layouts/public.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\Users\ASUS\Downloads\ALLIMPORTANTPROJECTS\DamarProjectSchool\resources\views/layouts/public.blade.php ENDPATH**/ ?>
