@@ -40,8 +40,17 @@ class RekomendasiController extends Controller
     public function hitung(Request $request)
     {
         $kriteriaList = Kriteria::active()->get();
+        $hasDistanceCriterion = $kriteriaList->contains(
+            fn($k) => str_contains(strtolower($k->nama_kriteria), 'jarak')
+                || str_contains(strtolower($k->nama_kriteria), 'lokasi')
+        );
 
         $rules = [];
+        if ($hasDistanceCriterion) {
+            $rules['user_latitude'] = ['required', 'numeric', 'between:-90,90'];
+            $rules['user_longitude'] = ['required', 'numeric', 'between:-180,180'];
+        }
+
         foreach ($kriteriaList as $k) {
             $rules['pref_' . $k->id] = ['nullable', 'numeric', 'min:0'];
         }
@@ -54,6 +63,10 @@ class RekomendasiController extends Controller
             if ($val !== null && $val !== '') {
                 $preferensi[$k->id] = (float) $val;
             }
+        }
+        if ($request->filled(['user_latitude', 'user_longitude'])) {
+            $preferensi['_user_lat'] = (float) $request->input('user_latitude');
+            $preferensi['_user_lng'] = (float) $request->input('user_longitude');
         }
 
         // Run SAW

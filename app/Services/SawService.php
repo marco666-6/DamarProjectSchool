@@ -68,6 +68,8 @@ class SawService
             }
         }
 
+        $matrix = $this->applyUserLocationDistances($matrix, $kriteria, $sekolahList, $preferensi);
+
         // 4. Apply user preference adjustments
         //    If user gave a preference for a criterion, we inject it into the
         //    column so normalization naturally reflects how close each school is.
@@ -221,6 +223,57 @@ class SawService
         }
 
         return $matrix;
+    }
+
+    private function applyUserLocationDistances(
+        array $matrix,
+        Collection $kriteria,
+        Collection $sekolahList,
+        array $preferensi
+    ): array {
+        if (!isset($preferensi['_user_lat'], $preferensi['_user_lng'])) {
+            return $matrix;
+        }
+
+        $jarakKriteria = $kriteria->first(fn($k) => $this->isDistanceCriterion($k));
+        if (!$jarakKriteria) {
+            return $matrix;
+        }
+
+        $userLat = (float) $preferensi['_user_lat'];
+        $userLng = (float) $preferensi['_user_lng'];
+
+        foreach ($sekolahList as $sekolah) {
+            $matrix[$sekolah->id][$jarakKriteria->id] = $this->hasCoordinate($sekolah)
+                ? $this->haversineDistanceKm($userLat, $userLng, (float) $sekolah->latitude, (float) $sekolah->longitude)
+                : 999.0;
+        }
+
+        return $matrix;
+    }
+
+    private function isDistanceCriterion(Kriteria $kriteria): bool
+    {
+        $name = strtolower($kriteria->nama_kriteria . ' ' . $kriteria->kode_kriteria);
+
+        return str_contains($name, 'jarak') || str_contains($name, 'lokasi');
+    }
+
+    private function hasCoordinate(SekolahRekomendasi $sekolah): bool
+    {
+        return $sekolah->latitude !== null && $sekolah->longitude !== null;
+    }
+
+    private function haversineDistanceKm(float $fromLat, float $fromLng, float $toLat, float $toLng): float
+    {
+        $earthRadiusKm = 6371.0;
+        $latDelta = deg2rad($toLat - $fromLat);
+        $lngDelta = deg2rad($toLng - $fromLng);
+
+        $a = sin($latDelta / 2) ** 2
+            + cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * sin($lngDelta / 2) ** 2;
+
+        return round($earthRadiusKm * 2 * atan2(sqrt($a), sqrt(1 - $a)), 3);
     }
 
     // ─────────────────────────────────────────────────────────────────────────

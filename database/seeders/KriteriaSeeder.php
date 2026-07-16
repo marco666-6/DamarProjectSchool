@@ -44,7 +44,7 @@ class KriteriaSeeder extends Seeder
                 'jenis'  => 'cost',    // lower is better
                 'bobot'  => 0.20,
                 'urutan' => 4,
-                'desc'   => 'Estimasi jarak dari pusat kota Batam (km), bukan dari alamat rumah pengguna. Semakin dekat semakin baik.',
+                'desc'   => 'Jarak GPS dari lokasi rumah yang dipilih pengguna ke koordinat sekolah (km). Semakin dekat semakin baik.',
             ],
         ];
 

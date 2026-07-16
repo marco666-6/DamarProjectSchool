@@ -10,161 +10,57 @@ use Illuminate\Database\Seeder;
 class SekolahRekomendasiSeeder extends Seeder
 {
     /**
-     * Criteria mapping (must match KriteriaSeeder):
-     *   C1 = Biaya SPP   (cost)    — in Rupiah
-     *   C2 = Akreditasi  (benefit) — A=100, B=80, C=60, Belum=40
-     *   C3 = Fasilitas   (benefit) — score 0-100
-     *   C4 = Jarak       (cost)    — km from Batam city center
+     * C1 = Biaya SPP (cost)
+     * C2 = Akreditasi (benefit)
+     * C3 = Fasilitas (benefit)
+     * C4 = Jarak / Lokasi (cost), calculated dynamically from user GPS input.
      */
     public function run(): void
     {
         $schools = [
-            [
-                'nama'       => 'SMP Negeri 1 Batam',
-                'npsn'       => '10100101',
-                'jenis'      => 'Negeri',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. Brigjen Katamso No. 1, Lubuk Baja, Batam Kota',
-                'kecamatan'  => 'Lubuk Baja',
-                'biaya_spp'  => 0,
-                'fasilitas'  => ['Perpustakaan','Lab IPA','Lab Komputer','Lapangan','Masjid','Kantin'],
-                'desc'       => 'SMP Negeri terbaik di Batam dengan fasilitas lengkap dan prestasi tinggi.',
-                'jml_siswa'  => 900,
-                'jml_guru'   => 55,
-                // SAW scores: C1=biaya(0), C2=akreditasi(100), C3=fasilitas(90), C4=jarak(2)
-                'saw' => ['C1' => 0, 'C2' => 100, 'C3' => 90, 'C4' => 2],
-            ],
-            [
-                'nama'       => 'SMP Negeri 3 Batam',
-                'npsn'       => '10100103',
-                'jenis'      => 'Negeri',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. Gajah Mada, Sagulung, Batam',
-                'kecamatan'  => 'Sagulung',
-                'biaya_spp'  => 0,
-                'fasilitas'  => ['Perpustakaan','Lab IPA','Lapangan','Kantin','UKS'],
-                'desc'       => 'Sekolah negeri unggulan di kawasan Sagulung dengan lingkungan belajar kondusif.',
-                'jml_siswa'  => 750,
-                'jml_guru'   => 42,
-                'saw' => ['C1' => 0, 'C2' => 100, 'C3' => 80, 'C4' => 8],
-            ],
-            [
-                'nama'       => 'SMP Islam Terpadu Al-Azhar',
-                'npsn'       => '10100201',
-                'jenis'      => 'Swasta',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. R. Patah, Batam Kota',
-                'kecamatan'  => 'Batam Kota',
-                'biaya_spp'  => 800000,
-                'fasilitas'  => ['Masjid','Perpustakaan','Lab Komputer','Lapangan','Tahfidz Room','Kantin Halal','UKS'],
-                'desc'       => 'Sekolah Islam terpadu dengan program tahfidz dan kurikulum internasional.',
-                'jml_siswa'  => 500,
-                'jml_guru'   => 38,
-                'saw' => ['C1' => 800000, 'C2' => 100, 'C3' => 88, 'C4' => 3],
-            ],
-            [
-                'nama'       => 'SMP Hang Nadim Batam',
-                'npsn'       => '10100301',
-                'jenis'      => 'Swasta',
-                'akreditasi' => 'B',
-                'alamat'     => 'Jl. Engku Putri, Batam Centre',
-                'kecamatan'  => 'Batam Kota',
-                'biaya_spp'  => 500000,
-                'fasilitas'  => ['Perpustakaan','Lab Komputer','Lapangan','Kantin'],
-                'desc'       => 'Sekolah swasta dengan biaya terjangkau dan lokasi strategis di Batam Centre.',
-                'jml_siswa'  => 320,
-                'jml_guru'   => 25,
-                'saw' => ['C1' => 500000, 'C2' => 80, 'C3' => 65, 'C4' => 4],
-            ],
-            [
-                'nama'       => 'SMP Muhammadiyah 1 Batam',
-                'npsn'       => '10100401',
-                'jenis'      => 'Swasta',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. Imam Bonjol, Batu Ampar',
-                'kecamatan'  => 'Batu Ampar',
-                'biaya_spp'  => 350000,
-                'fasilitas'  => ['Masjid','Perpustakaan','Lab IPA','Lapangan','Kantin'],
-                'desc'       => 'Sekolah Muhammadiyah dengan pendidikan agama Islam yang kuat dan biaya terjangkau.',
-                'jml_siswa'  => 420,
-                'jml_guru'   => 30,
-                'saw' => ['C1' => 350000, 'C2' => 100, 'C3' => 72, 'C4' => 5],
-            ],
-            [
-                'nama'       => 'SMP Santa Maria Batam',
-                'npsn'       => '10100501',
-                'jenis'      => 'Swasta',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. Laksamana Bintan, Lubuk Baja',
-                'kecamatan'  => 'Lubuk Baja',
-                'biaya_spp'  => 950000,
-                'fasilitas'  => ['Lab IPA','Lab Komputer','Perpustakaan','Lapangan','Kantin','Aula'],
-                'desc'       => 'Sekolah swasta dengan standar tinggi, fasilitas modern, dan prestasi akademik.',
-                'jml_siswa'  => 480,
-                'jml_guru'   => 35,
-                'saw' => ['C1' => 950000, 'C2' => 100, 'C3' => 92, 'C4' => 3],
-            ],
-            [
-                'nama'       => 'SMP Negeri 6 Batam',
-                'npsn'       => '10100106',
-                'jenis'      => 'Negeri',
-                'akreditasi' => 'B',
-                'alamat'     => 'Jl. Seraya, Batu Ampar',
-                'kecamatan'  => 'Batu Ampar',
-                'biaya_spp'  => 0,
-                'fasilitas'  => ['Perpustakaan','Lapangan','Kantin','UKS'],
-                'desc'       => 'Sekolah negeri di kawasan Batu Ampar dengan akses transportasi mudah.',
-                'jml_siswa'  => 600,
-                'jml_guru'   => 35,
-                'saw' => ['C1' => 0, 'C2' => 80, 'C3' => 60, 'C4' => 6],
-            ],
-            [
-                'nama'       => 'SMP IT Ihsanul Fikri Batam',
-                'npsn'       => '10100601',
-                'jenis'      => 'Swasta',
-                'akreditasi' => 'A',
-                'alamat'     => 'Jl. Tiban Indah, Sekupang',
-                'kecamatan'  => 'Sekupang',
-                'biaya_spp'  => 650000,
-                'fasilitas'  => ['Masjid','Lab Komputer','Perpustakaan','Lapangan','Tahfidz Room','Kantin Halal'],
-                'desc'       => 'Sekolah Islam Terpadu dengan program boarding dan tahfidz intensif.',
-                'jml_siswa'  => 360,
-                'jml_guru'   => 28,
-                'saw' => ['C1' => 650000, 'C2' => 100, 'C3' => 82, 'C4' => 9],
-            ],
+            ['nama' => 'SMP Negeri 3 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'A', 'alamat' => 'Jalan R.E. Martadinata, Sungai Harapan, Sekupang, Batam', 'kecamatan' => 'Sekupang', 'latitude' => 1.1065300, 'longitude' => 103.9525900, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Laboratorium', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di kawasan Sekupang. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 100, 'fasilitas_score' => 78],
+            ['nama' => 'SMP Negeri 6 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Jalan Laksamana Bintan, Bengkong Indah, Bengkong, Batam', 'kecamatan' => 'Bengkong', 'latitude' => 1.1442500, 'longitude' => 104.0282049, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di kawasan Bengkong. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 68],
+            ['nama' => 'SMP Negeri 9 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Jalan Brigjen Katamso, Sagulung Kota, Sagulung, Batam', 'kecamatan' => 'Sagulung', 'latitude' => 1.0489201, 'longitude' => 103.9463087, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Laboratorium', 'Lapangan', 'UKS'], 'desc' => 'Sekolah negeri di kawasan Sagulung. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 72],
+            ['nama' => 'SMP Negeri 20 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Jalan Masuk Puskesmas, Tiban Baru, Sekupang, Batam', 'kecamatan' => 'Sekupang', 'latitude' => 1.1021700, 'longitude' => 103.9694600, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di kawasan Tiban Baru. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 70],
+            ['nama' => 'SMP Negeri 31 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Anggrek Sari, Taman Baloi, Batam Kota, Batam', 'kecamatan' => 'Batam Kota', 'latitude' => 1.1176882, 'longitude' => 104.0413321, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Laboratorium', 'Lapangan', 'UKS'], 'desc' => 'Sekolah negeri di kawasan Batam Kota. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 74],
+            ['nama' => 'SMP Negeri 34 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Jalan Hang Kesturi, Batu Besar, Nongsa, Batam', 'kecamatan' => 'Nongsa', 'latitude' => 1.1267798, 'longitude' => 104.1416686, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di kawasan Nongsa. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 66],
+            ['nama' => 'SMP Negeri 47 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Jalan Raya Marina City, Tanjung Riau, Sekupang, Batam', 'kecamatan' => 'Sekupang', 'latitude' => 1.0544415, 'longitude' => 103.9515270, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di Tanjung Riau. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 64],
+            ['nama' => 'SMP Negeri 62 Batam', 'jenis' => 'Negeri', 'akreditasi' => 'B', 'alamat' => 'Gang Utama, Tanjung Buntung, Bengkong, Batam', 'kecamatan' => 'Bengkong', 'latitude' => 1.1679508, 'longitude' => 104.0291117, 'biaya_spp' => 0, 'fasilitas' => ['Perpustakaan', 'Lapangan', 'UKS', 'Kantin'], 'desc' => 'Sekolah negeri di Tanjung Buntung. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 62],
+            ['nama' => 'SD-SMP-SMA Muhammadiyah Batam', 'jenis' => 'Swasta', 'akreditasi' => 'B', 'alamat' => 'Tembesi Point, Kibing, Batu Aji, Batam', 'kecamatan' => 'Batu Aji', 'latitude' => 1.0451800, 'longitude' => 103.9900000, 'biaya_spp' => 350000, 'fasilitas' => ['Masjid', 'Perpustakaan', 'Lapangan', 'Kantin'], 'desc' => 'Kompleks sekolah Muhammadiyah di Batu Aji. Koordinat seed diambil dari data OpenStreetMap/Nominatim.', 'akreditasi_score' => 80, 'fasilitas_score' => 70],
         ];
 
         $kriteriaMap = Kriteria::all()->keyBy('kode_kriteria');
 
         foreach ($schools as $s) {
-            $fasilitas = json_encode($s['fasilitas']);
+            $sekolah = SekolahRekomendasi::updateOrCreate(
+                ['nama_sekolah' => $s['nama']],
+                [
+                    'npsn' => $s['npsn'] ?? null,
+                    'jenis' => $s['jenis'],
+                    'akreditasi' => $s['akreditasi'],
+                    'alamat_sekolah' => $s['alamat'],
+                    'kecamatan' => $s['kecamatan'],
+                    'kota' => 'Batam',
+                    'latitude' => $s['latitude'],
+                    'longitude' => $s['longitude'],
+                    'fasilitas_sekolah' => json_encode($s['fasilitas']),
+                    'biaya_spp' => $s['biaya_spp'],
+                    'deskripsi' => $s['desc'],
+                    'is_active' => true,
+                ]
+            );
 
-            $sekolah = SekolahRekomendasi::updateOrCreate(['npsn' => $s['npsn']], [
-                'nama_sekolah'      => $s['nama'],
-                'npsn'              => $s['npsn'],
-                'jenis'             => $s['jenis'],
-                'akreditasi'        => $s['akreditasi'],
-                'alamat_sekolah'    => $s['alamat'],
-                'kecamatan'         => $s['kecamatan'],
-                'kota'              => 'Batam',
-                'fasilitas_sekolah' => $fasilitas,
-                'biaya_spp'         => $s['biaya_spp'],
-                'deskripsi'         => $s['desc'],
-                'jumlah_siswa'      => $s['jml_siswa'],
-                'jumlah_guru'       => $s['jml_guru'],
-                'is_active'         => true,
-            ]);
+            $scores = ['C1' => $s['biaya_spp'], 'C2' => $s['akreditasi_score'], 'C3' => $s['fasilitas_score'], 'C4' => 0];
 
-            // Insert SAW scores
-            foreach ($s['saw'] as $kode => $nilai) {
+            foreach ($scores as $kode => $nilai) {
                 $kriteria = $kriteriaMap[$kode] ?? null;
                 if (!$kriteria) continue;
 
                 $keterangan = match ($kode) {
-                    'C1' => $nilai > 0 ? 'SPP Rp ' . number_format($nilai, 0, ',', '.') . '/bulan' : 'SPP gratis',
-                    'C2' => 'Akreditasi ' . $s['akreditasi'],
-                    'C3' => count($s['fasilitas']) . ' fasilitas utama',
-                    'C4' => 'Estimasi ' . $nilai . ' km dari pusat kota Batam',
+                    'C1' => $nilai > 0 ? 'SPP Rp ' . number_format($nilai, 0, ',', '.') . '/bulan' : 'SPP gratis/negeri',
+                    'C2' => 'Akreditasi ' . $s['akreditasi'] . ' (' . $nilai . ')',
+                    'C3' => count($s['fasilitas']) . ' fasilitas utama, skor seed ' . $nilai,
+                    'C4' => 'Dihitung otomatis dari lokasi rumah pengguna ke koordinat sekolah',
                     default => null,
                 };
 

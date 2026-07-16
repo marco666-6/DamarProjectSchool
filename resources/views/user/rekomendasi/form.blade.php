@@ -4,6 +4,11 @@
 @section('page-subtitle', 'Masukkan kebutuhan yang penting bagi Anda. Sistem akan membantu menyusun urutan sekolah yang paling cocok.')
 
 @section('content')
+@php
+    $hasDistanceCriterion = $kriteriaList->contains(fn($k) => str_contains(strtolower($k->nama_kriteria), 'jarak') || str_contains(strtolower($k->nama_kriteria), 'lokasi'));
+    $defaultLat = old('user_latitude', 1.1186);
+    $defaultLng = old('user_longitude', 104.0486);
+@endphp
 <div class="row g-4">
     <div class="col-lg-7">
         <div class="card">
@@ -15,6 +20,40 @@
                 <form method="POST" action="{{ route('user.rekomendasi.hitung') }}">
                     @csrf
                     <div class="row g-3">
+                        @if($hasDistanceCriterion)
+                            <div class="col-12">
+                                <div class="p-3 rounded border bg-light">
+                                    <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
+                                        <div>
+                                            <label class="form-label fw-semibold mb-1">Lokasi Rumah</label>
+                                            <div class="small text-muted">Klik titik rumah di peta. Jarak sekolah akan dihitung otomatis dari titik ini.</div>
+                                        </div>
+                                        <span class="badge bg-primary">GPS input</span>
+                                    </div>
+                                    <div id="home-location-map" class="rounded border mb-2" style="height:280px"></div>
+                                    <input type="hidden" name="user_latitude" id="user_latitude" value="{{ $defaultLat }}">
+                                    <input type="hidden" name="user_longitude" id="user_longitude" value="{{ $defaultLng }}">
+                                    <div class="row g-2 align-items-end">
+                                        <div class="col-md-5">
+                                            <label class="form-label small fw-semibold">Latitude</label>
+                                            <input type="number" id="user_latitude_display" class="form-control form-control-sm" step="any" value="{{ $defaultLat }}">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label class="form-label small fw-semibold">Longitude</label>
+                                            <input type="number" id="user_longitude_display" class="form-control form-control-sm" step="any" value="{{ $defaultLng }}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" id="use-current-location" class="btn btn-outline-primary btn-sm w-100" title="Gunakan lokasi perangkat">
+                                                <i class="bi bi-crosshair"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @error('user_latitude')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
+                                    @error('user_longitude')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
+                                </div>
+                            </div>
+                        @endif
+
                         @foreach($kriteriaList as $k)
                             @php
                                 $lowerName = strtolower($k->nama_kriteria);
@@ -56,7 +95,7 @@
                                                    placeholder="Contoh: 5" min="0" max="100" step="1">
                                             <span class="input-group-text">km maksimal</span>
                                         </div>
-                                        <div class="form-text">Saat ini nilai jarak memakai estimasi dari pusat kota Batam, bukan dari alamat rumah.</div>
+                                        <div class="form-text">Nilai jarak dihitung dari lokasi rumah yang Anda pilih di peta.</div>
                                     @else
                                         <input type="number" name="pref_{{ $k->id }}" class="form-control"
                                                placeholder="Isi angka yang sesuai dengan penjelasan di atas" step="any">
@@ -118,3 +157,57 @@
     </div>
 </div>
 @endsection
+
+@if($hasDistanceCriterion)
+    @push('styles')
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    @endpush
+
+    @push('scripts')
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const latInput = document.getElementById('user_latitude');
+                const lngInput = document.getElementById('user_longitude');
+                const latDisplay = document.getElementById('user_latitude_display');
+                const lngDisplay = document.getElementById('user_longitude_display');
+                const initialLat = parseFloat(latInput.value) || 1.1186;
+                const initialLng = parseFloat(lngInput.value) || 104.0486;
+                const map = L.map('home-location-map').setView([initialLat, initialLng], 12);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+
+                const marker = L.marker([initialLat, initialLng], { draggable: true }).addTo(map);
+
+                function setLocation(lat, lng, pan = true) {
+                    const fixedLat = Number(lat).toFixed(7);
+                    const fixedLng = Number(lng).toFixed(7);
+                    latInput.value = fixedLat;
+                    lngInput.value = fixedLng;
+                    latDisplay.value = fixedLat;
+                    lngDisplay.value = fixedLng;
+                    marker.setLatLng([fixedLat, fixedLng]);
+                    if (pan) map.setView([fixedLat, fixedLng], Math.max(map.getZoom(), 14));
+                }
+
+                map.on('click', (event) => setLocation(event.latlng.lat, event.latlng.lng));
+                marker.on('dragend', () => {
+                    const point = marker.getLatLng();
+                    setLocation(point.lat, point.lng, false);
+                });
+                latDisplay.addEventListener('change', () => setLocation(latDisplay.value, lngDisplay.value));
+                lngDisplay.addEventListener('change', () => setLocation(latDisplay.value, lngDisplay.value));
+
+                document.getElementById('use-current-location').addEventListener('click', () => {
+                    if (!navigator.geolocation) return;
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        setLocation(position.coords.latitude, position.coords.longitude);
+                    });
+                });
+            });
+        </script>
+    @endpush
+@endif

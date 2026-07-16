@@ -14,7 +14,10 @@
 @if(count($rankedResults) >= 1)
     <div class="row g-3 mb-4">
         @foreach(array_slice($rankedResults, 0, 3) as $r)
-            @php $s = $r['sekolah'] ?? null; @endphp
+            @php
+                $s = $r['sekolah'] ?? null;
+                $distanceDetail = collect($r['detail'])->first(fn($detail) => str_contains(strtolower($detail['nama']), 'jarak') || str_contains(strtolower($detail['nama']), 'lokasi'));
+            @endphp
             <div class="col-md-4">
                 <div class="card result-card h-100 {{ $r['ranking'] === 1 ? 'border-success border-2' : '' }}">
                     @if($r['ranking'] === 1)
@@ -32,6 +35,9 @@
                         </div>
 
                         <div class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>{{ $s['alamat'] ?? '-' }}</div>
+                        @if($distanceDetail)
+                            <div class="small text-muted mb-2"><i class="bi bi-signpost-split me-1"></i>Jarak {{ number_format($distanceDetail['raw'], 2, ',', '.') }} km</div>
+                        @endif
                         <div class="small text-muted mb-3"><i class="bi bi-cash me-1"></i>SPP {{ $s['biaya_spp'] ?? '-' }}</div>
 
                         <div class="mb-3">
@@ -75,13 +81,17 @@
                         <th>Status</th>
                         <th>Akreditasi</th>
                         <th>SPP</th>
+                        <th>Jarak</th>
                         <th class="text-center">Skor</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($rankedResults as $r)
-                        @php $s = $r['sekolah'] ?? null; @endphp
+                        @php
+                            $s = $r['sekolah'] ?? null;
+                            $distanceDetail = collect($r['detail'])->first(fn($detail) => str_contains(strtolower($detail['nama']), 'jarak') || str_contains(strtolower($detail['nama']), 'lokasi'));
+                        @endphp
                         <tr>
                             <td class="ps-3">
                                 <span class="rank-badge rank-{{ $r['ranking'] <= 3 ? $r['ranking'] : 'other' }}">{{ $r['ranking'] }}</span>
@@ -90,6 +100,7 @@
                             <td>{{ $s['jenis'] ?? '-' }}</td>
                             <td>{{ $s['akreditasi'] ?? '-' }}</td>
                             <td class="small">{{ $s['biaya_spp'] ?? '-' }}</td>
+                            <td class="small">{{ $distanceDetail ? number_format($distanceDetail['raw'], 2, ',', '.') . ' km' : '-' }}</td>
                             <td class="text-center"><span class="badge text-bg-primary">{{ $r['skor_total'] }}</span></td>
                             <td><a href="{{ route('user.rekomendasi.sekolah', $r['sekolah_id']) }}" class="btn btn-outline-success btn-sm">Detail</a></td>
                         </tr>
